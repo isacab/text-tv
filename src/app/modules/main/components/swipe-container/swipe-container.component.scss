@@ -1,0 +1,9 @@
+:host {
+    position: relative;
+}
+
+.swipe-container-child {
+    position: relative;
+    will-change: transform;
+    height: 100%;
+}

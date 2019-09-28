@@ -1,0 +1,17 @@
+<div class="app-root">
+  <div class="app-main">
+    <div class="renderer-wrapper">
+      <div #wrapper class="inner-renderer-wrapper" (window:resize)="updateZoom()">
+        <div class="zoom-container" [ngStyle]="style">
+          <app-swipe-container (pageChange)="swipe($event)" [disabled]="swipeDisabled" [animationDisabled]="swipeAnimationDisabled">
+            <app-renderer [htmlContent]="textTvPage?.htmlContent" (linkClick)="onLinkClick($event)"></app-renderer> 
+          </app-swipe-container>
+        </div>
+      </div>
+    </div> 
+    <app-loading-overlay *ngIf="showLoadingOverlay"></app-loading-overlay>
+  </div>
+  <div class="app-footer">
+    <app-menu-bar [page]="textTvPage?.pageNumber" (pageChange)="pageChange($event)" (refresh)="refresh()" (nextClick)="next()" (prevClick)="prev()"></app-menu-bar>
+  </div>
+</div>

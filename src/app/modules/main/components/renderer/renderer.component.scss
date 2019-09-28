@@ -1,0 +1,13 @@
+@import "svttextstyle";
+@import "custom-svttextstyle";
+
+:host {
+    color: #fff;
+}
+
+.html-content-wrapper {
+    background-color: #000;
+    height: 100%;
+    overflow-y: auto;
+}
+

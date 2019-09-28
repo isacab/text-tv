@@ -1,0 +1,3 @@
+<div #wrapper class="html-content-wrapper">
+    <div [ngStyle]="style" [innerHTML]="htmlContent | safeHtml" (click)="onClick($event)"></div>
+</div>

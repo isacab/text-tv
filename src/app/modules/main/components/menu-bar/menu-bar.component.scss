@@ -1,0 +1,45 @@
+$menu-bg-color: #222327; /*#333;*/
+$menu-item-active-bg-color: #7b7b7b;
+$menu-item-hover-bg-color: $menu-bg-color;
+
+:host {
+    background-color: $menu-bg-color;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-container {
+    display: flex;
+    margin: auto;
+    max-width: 665px;
+    height: 50px;
+}
+
+.menu-item {
+    flex: 1 1 0;
+    color: #fafafa;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.menu-action-btn {
+    padding: 8px;
+    background-color: inherit;
+    border: 0;
+    color: inherit;
+    font-size: 18px;
+    height: 100%;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.menu-action-btn .fas {
+    font-size: 1.1em;
+}
+
+.menu-action-btn:active:hover {
+    background-color: rgba(255, 255, 255, 0.250);
+}

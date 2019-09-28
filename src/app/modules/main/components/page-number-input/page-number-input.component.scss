@@ -1,0 +1,30 @@
+:host {
+    text-align: center;
+}
+
+input.page-input::-webkit-outer-spin-button,
+input.page-input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input.page-input {
+    -moz-appearance:textfield; /* Firefox */
+    background-color: transparent;
+    border: 0;
+    margin: 0 0 2px 0;
+    padding: 0 2px;
+    font-weight: bold;
+    width: 48px;
+    font-size: 26px;
+    outline: none;
+    font-family: 'Inconsolata', monospace;
+    text-align: center;
+    border-bottom: 1px solid #fafafa;
+    color: #fafafa;
+}
+
+input.page-input:focus {
+    border-bottom: 1.5px solid #fafafa;
+}

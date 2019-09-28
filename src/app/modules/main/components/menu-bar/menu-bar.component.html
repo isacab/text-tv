@@ -1,0 +1,17 @@
+<div class="menu-container">
+  <!--<div class="menu-item">
+    <button class="menu-action-btn ripple" title="Mer" (click)="settings()"><i class="fas fa-ellipsis-v"></i></button>
+  </div>-->
+  <div class="menu-item">
+    <button class="menu-action-btn ripple" title="Föregående" (click)="prev()"><i class="fas fa-chevron-left"></i></button>
+  </div>
+  <div class="menu-item">
+    <app-page-number-input [(page)]="page" (pageChange)="pageInputChange($event)"></app-page-number-input>
+  </div>
+  <div class="menu-item">
+    <button class="menu-action-btn ripple" title="Nästa" (click)="next()"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <!--<div class="menu-item">
+    <button class="menu-action-btn ripple" title="Uppdatera" (click)="refresh()"><i class="fas fa-sync-alt"></i></button>
+  </div>-->
+</div>

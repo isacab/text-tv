@@ -1,0 +1,9 @@
+<div #swipableRef class="swipe-container-child"
+  (window:resize)="calcWidth()"
+  (panstart)="onPanStart($event)"
+  (pan)="onPan($event)"
+  (panend)="onPanEnd($event)" 
+  (swipe)="onSwipe($event)"
+  [style.left]="position">
+  <ng-content></ng-content>
+</div>

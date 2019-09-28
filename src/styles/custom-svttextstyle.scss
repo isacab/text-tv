@@ -1,0 +1,82 @@
+pre.root {
+    background-color: #000;
+    line-height: initial;
+    margin: 0 auto;
+    width: auto;
+}
+span {
+    image-rendering: pixelated !important;
+}
+span.W,span.B,span.Y,span.BK,span.G,span.C,span.R {
+    position: relative;
+    z-index: 2;
+}
+pre.root span::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: 1;
+    bottom: -1px;
+    left: 1;
+    /*background: inherit;*/
+    z-index: -1;
+}
+pre.root span {
+    background-repeat: no-repeat !important;
+}
+.DH {
+    line-height: initial;
+}
+/*@media (pointer: coarse) or (max-width: 400px) {*/
+    pre.root {
+        letter-spacing: 1.2px;
+        margin-left: -10px;
+        font-family: "Inconsolata", monospace;
+    }
+    .DH {
+        letter-spacing: -1.8px;
+    }
+    pre.root span::after {
+        background: inherit;
+    }
+/*}*/
+
+/*@media (min-width: 998px) {
+    pre.root {
+        zoom: 1.5;
+        -ms-zoom: 1.5;
+        -webkit-zoom: 1.5;
+        transform: initial;
+        transform-origin: initial;
+        -moz-transform:  scale(1.5,1.5);
+        -moz-transform-origin: center top;
+    }
+}
+
+@media (max-width: 372px) and (min-width: 300px) {
+    pre.root {
+        zoom: 0.8;
+        -ms-zoom: 0.8;
+        -webkit-zoom: 0.8;
+        transform: initial;
+        transform-origin: initial;
+        -moz-transform:  scale(0.8,0.8);
+        -moz-transform-origin: center top;
+    }
+}
+
+@media (max-width: 299px) {
+    pre.root {
+        zoom: 0.5;
+        -ms-zoom: 0.5;
+        -webkit-zoom: 0.5;
+        transform: initial;
+        transform-origin: initial;
+        -moz-transform:  scale(0.5,0.5);
+        -moz-transform-origin: center top;
+    }
+}*/
+
+.error-message {
+    text-align: center;   
+}
