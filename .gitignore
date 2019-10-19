@@ -4,6 +4,9 @@
 /dist
 /tmp
 /out-tsc
+/cordova/TextTvSv/www/*
+/cordova/TextTvSv/platforms/android/app/src/main/assets/www/*.*
+/cordova/TextTvSv/platforms/android/app/src/main/assets/www/assets
 # Only exists if Bazel was run
 /bazel-out
 
@@ -46,3 +49,4 @@ testem.log
 Thumbs.db
 
 /.firebase
+
