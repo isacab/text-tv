@@ -16,7 +16,7 @@ export class MenuBarComponent implements OnInit {
   @Output() nextClick = new EventEmitter();
   @Output() settingsClick = new EventEmitter();
 
-  @ViewChild(PageNumberInputComponent) pageNumberInputRef: PageNumberInputComponent;
+  @ViewChild(PageNumberInputComponent, { static: true }) pageNumberInputRef: PageNumberInputComponent;
 
   constructor(
     private hotKeysService: HotkeysService

@@ -18,7 +18,7 @@ export class MainComponent implements OnInit, OnDestroy {
   private _textTvPage: TextTvPage;
   private _textTvPageSubscription: Subscription;
 
-  @ViewChild('wrapper') wrapperRef: ElementRef;
+  @ViewChild('wrapper', { static: true }) wrapperRef: ElementRef;
 
   style: any;
   swipeDisabled = false;

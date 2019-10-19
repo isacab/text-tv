@@ -43,7 +43,7 @@ export class SwipeContainerComponent implements OnInit {
 
   @Input() animationDisabled = true;
 
-  @ViewChild('swipableRef') swipableRef;
+  @ViewChild('swipableRef', { static: true }) swipableRef;
 
   constructor() { }
 

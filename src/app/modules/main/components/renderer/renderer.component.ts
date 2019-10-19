@@ -10,7 +10,7 @@ export class RendererComponent implements OnInit, OnChanges {
 
   @Input() htmlContent: string;
 
-  @ViewChild('wrapper') wrapperRef: ElementRef;
+  @ViewChild('wrapper', { static: true }) wrapperRef: ElementRef;
 
   @Output() linkClick = new EventEmitter<string>();
 

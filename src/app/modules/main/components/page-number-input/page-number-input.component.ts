@@ -10,7 +10,7 @@ export class PageNumberInputComponent implements OnInit {
   @Input() page: number;
   @Output() pageChange = new EventEmitter<number>();
 
-  @ViewChild('Input') inputRef: ElementRef;
+  @ViewChild('Input', { static: true }) inputRef: ElementRef;
 
   constructor() { }
 
