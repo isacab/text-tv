@@ -26,8 +26,8 @@ export class MenuBarComponent implements OnInit {
     this.hotKeysService.add([
       new Hotkey('left', () => { this.prev(); return true; } ),
       new Hotkey('right', () => { this.next(); return true; } ),
-      new Hotkey('p', () => { this.pageNumberInputRef.focus(); return true; } ),
       new Hotkey('r', () => { this.refresh(); return true; } ),
+      new Hotkey(['p', '1', '2', '3', '4', '5', '6', '7', '8', '9'], () => { this.pageNumberInputRef.focus(); return true; } )
     ]);
   }
 
@@ -50,5 +50,7 @@ export class MenuBarComponent implements OnInit {
   pageInputChange(e) {
     this.pageChange.emit(this.page);
   }
+
+
 
 }
