@@ -24,6 +24,9 @@ pre.root span::after {
 pre.root span {
     background-repeat: no-repeat !important;
 }
+pre.root a:active {
+    background-color: #92bfeb6b;
+}
 .DH {
     line-height: initial;
 }
