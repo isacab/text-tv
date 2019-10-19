@@ -128,7 +128,7 @@ export class MainComponent implements OnInit, OnDestroy {
   
   updateZoom() {
     const width = this.wrapperRef.nativeElement.getBoundingClientRect().width;
-    const zoom = Math.min(width / 372, 1.5);
+    const zoom = Math.min(width / 364, 1.5);
     const scale = Math.min(zoom, 1);
     this.style = { 'zoom': zoom, 'transform': 'initial', 'transform-origin': 'initial', '-ms-zoom': zoom, '-webkit-zoom': zoom, '-moz-transform': `scale(${scale},${scale})`, '-moz-transform-origin': 'left top' }; 
   }
