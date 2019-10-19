@@ -6,7 +6,7 @@ import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output, Elem
   styleUrls: ['./renderer.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RendererComponent implements OnInit, OnChanges {
+export class RendererComponent implements OnInit {
 
   @Input() htmlContent: string;
 
@@ -19,15 +19,6 @@ export class RendererComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    //this.updateZoom();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    /*const htmlContent = changes['htmlContent'] && changes['htmlContent'].currentValue;
-    if(htmlContent) {
-      setTimeout(() => {
-      }, 0);
-    }*/
   }
 
   onClick(event: MouseEvent) {
@@ -40,14 +31,6 @@ export class RendererComponent implements OnInit, OnChanges {
         this.linkClick.emit(target.href);
       }
     }
-  }
-  
-  updateZoom() {
-    /*const width = this.wrapperRef.nativeElement.getBoundingClientRect().width;
-    const zoom = Math.min(width / 394, 1.5);
-    const scale = Math.min(zoom, 1);
-    this.style = { 'zoom': zoom, 'transform': 'initial', 'transform-origin': 'initial', '-ms-zoom': zoom, '-webkit-zoom': scale, '-moz-transform': `scale(${scale},${scale})`, '-moz-transform-origin': 'left top' }; 
-    */
   }
 
 }
