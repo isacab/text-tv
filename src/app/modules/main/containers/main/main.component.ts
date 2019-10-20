@@ -128,7 +128,8 @@ export class MainComponent implements OnInit, OnDestroy {
   
   updateZoom() {
     const rect = this.wrapperRef.nativeElement.getBoundingClientRect();
-    const zoom = rect.height > rect.width ? Math.min(rect.width / 364, 1.5) : Math.min(rect.height / 364, 1.5);
+    const landscape = screen && screen.orientation && screen.orientation.type == 'landscape-primary';
+    const zoom = landscape ? Math.min((screen.height-54) / 380, 1.5) : Math.min(rect.width / 368, 1.5);
     const scale = Math.min(zoom, 1);
     this.style = { 'zoom': zoom, 'transform': 'initial', 'transform-origin': 'initial', '-ms-zoom': zoom, '-webkit-zoom': zoom, '-moz-transform': `scale(${scale},${scale})`, '-moz-transform-origin': 'left top' }; 
   }

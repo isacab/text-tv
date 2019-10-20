@@ -3,6 +3,7 @@ html, body {
     padding: 0;
     height: 100%;
     background: #000;
+    color: #fff;
 }
 
 body * {
@@ -10,3 +11,4 @@ body * {
 }
 
 @import '~@fortawesome/fontawesome-free/css/all.css';
+@import 'styles/fonts.scss';
