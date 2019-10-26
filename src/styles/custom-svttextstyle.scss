@@ -40,7 +40,7 @@ pre.root a:active {
 }
 
 @media(max-width: 600px) {
-    pre.root:first-child {
+    pre.root:first-of-type {
         padding-top: 2px;
     }
 }
