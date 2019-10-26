@@ -7,13 +7,14 @@ $menu-item-hover-bg-color: $menu-bg-color;
     display: block;
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 .menu-container {
     display: flex;
     margin: auto;
     max-width: 665px;
-    height: 50px;
+    height: 52px;
 }
 
 .menu-item {
@@ -24,7 +25,7 @@ $menu-item-hover-bg-color: $menu-bg-color;
     flex-direction: column;
 }
 
-.menu-action-btn {
+.menu-item > .menu-action-btn {
     padding: 8px;
     background-color: inherit;
     border: 0;
@@ -34,12 +35,9 @@ $menu-item-hover-bg-color: $menu-bg-color;
     text-transform: uppercase;
     cursor: pointer;
     background-color: transparent;
+    border-radius: 0;
 }
 
-.menu-action-btn .fas {
-    font-size: 1.1em;
-}
-
-.menu-action-btn:active:hover {
-    background-color: rgba(255, 255, 255, 0.250);
+.menu-item > .menu-action-btn .material-icons {
+    font-size: 32px;
 }

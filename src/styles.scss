@@ -10,5 +10,5 @@ body * {
     touch-action: pan-y !important;
 }
 
-@import '~@fortawesome/fontawesome-free/css/all.css';
 @import 'styles/fonts.scss';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";

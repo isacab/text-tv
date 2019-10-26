@@ -10,6 +10,8 @@ import { TextTvService } from 'src/app/services/text-tv.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { SwipeContainerComponent, Direction } from './components/swipe-container/swipe-container.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
@@ -37,6 +39,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     AppRoutingModule,
     FormsModule,
     HotkeyModule.forRoot(),
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [
     TextTvService,

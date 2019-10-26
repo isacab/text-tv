@@ -1,17 +1,17 @@
 <div class="menu-container">
-  <!--<div class="menu-item">
-    <button class="menu-action-btn ripple" title="Mer" (click)="settings()"><i class="fas fa-ellipsis-v"></i></button>
+  <!--<div class="menu-item" matRipple [matRippleCentered]="true">
+    <a class="menu-action-btn" title="Mer" (click)="settings()"><mat-icon svgIcon="settings"></mat-icon></a>
   </div>-->
   <div class="menu-item">
-    <button class="menu-action-btn ripple" title="Föregående" (click)="prev()"><i class="fas fa-chevron-left"></i></button>
+    <button mat-button class="menu-action-btn" title="Föregående" (click)="prev()"><i class="material-icons">keyboard_arrow_left</i></button>
   </div>
   <div class="menu-item">
     <app-page-number-input [(page)]="page" (pageChange)="pageInputChange($event)"></app-page-number-input>
   </div>
   <div class="menu-item">
-    <button class="menu-action-btn ripple" title="Nästa" (click)="next()"><i class="fas fa-chevron-right"></i></button>
+    <button mat-button class="menu-action-btn" title="Nästa" (click)="next()"><i class="material-icons">keyboard_arrow_right</i></button>
   </div>
-  <!--<div class="menu-item">
-    <button class="menu-action-btn ripple" title="Uppdatera" (click)="refresh()"><i class="fas fa-sync-alt"></i></button>
+  <!--<div class="menu-item" matRipple [matRippleCentered]="true">
+    <a class="menu-action-btn" title="Uppdatera" (click)="refresh()"><mat-icon svgIcon="refresh"></mat-icon></a>
   </div>-->
 </div>

@@ -1,4 +1,8 @@
+/* Inconsolata */
 @font-face {
     font-family: 'Inconsolata';
-    src: url("assets/fonts/Inconsolata-Regular.ttf") format('truetype');
+    src: url(assets/fonts/Inconsolata-Regular.ttf) format('truetype');
 }
+
+/* Material Icons */
+@import '~material-design-icons/iconfont/material-icons.css';
