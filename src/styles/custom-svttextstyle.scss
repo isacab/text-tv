@@ -39,7 +39,7 @@ pre.root a:active {
     text-align: center;   
 }
 
-@media(max-height: 400px) {
+@media(max-width: 600px) {
     pre.root:first-child {
         padding-top: 2px;
     }

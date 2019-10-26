@@ -128,7 +128,7 @@ export class MainComponent implements OnInit, OnDestroy {
   
   updateZoom() {
     const wrapperRect = this.wrapperRef.nativeElement.getBoundingClientRect();
-    const textTvContentRect = { width: 368, height: 388 };
+    const textTvContentRect = { width: 352, height: 388 };
     //const landscape = wrapperRect.width > wrapperRect.height && window.screen && window.screen.orientation && window.screen.orientation.type == 'landscape-primary';
     //const zoom = landscape ? Math.min(height / textTvContentRect.height, 1.5) : Math.min(width / textTvContentRect.width, 1.5);
     const zoom = Math.min(wrapperRect.width / textTvContentRect.width, 1.5);
