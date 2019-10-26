@@ -57,7 +57,7 @@ export class SwipeContainerComponent implements OnInit {
 
   onPanStart(event: any): void {
     if(!this.disabled && event.direction & Direction.HORIZONTAL) {
-      event.preventDefault();
+      //event.preventDefault();
       this.isActive = true;
     }
   }
@@ -79,7 +79,7 @@ export class SwipeContainerComponent implements OnInit {
 
   onPan(event: any): void {
     if(this.isActive) {
-      event.preventDefault();
+      //event.preventDefault();
       this.deltaX = event.deltaX;
     }
   }

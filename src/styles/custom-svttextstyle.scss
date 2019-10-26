@@ -5,6 +5,7 @@ pre.root {
     width: auto;
     letter-spacing: 1.2px;
     font-family: "Inconsolata", monospace;
+    user-select: text;
 }
 span {
     image-rendering: pixelated !important;
