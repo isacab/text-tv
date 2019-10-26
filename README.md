@@ -14,7 +14,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `npm run build-prod` to build the angular project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the angular project. The build artifacts will be stored in the `dist/` directory.
 Run `buld-android.sh` under `cordova/TextTvSv` to build the android project.
 
 ## Further help
