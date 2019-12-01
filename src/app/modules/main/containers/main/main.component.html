@@ -1,10 +1,10 @@
-<div class="app-root">
+<div [ngClass]="['app-root', envClass]">
   <div class="app-main">
-    <div class="renderer-wrapper">
+    <div #scrollWrapper class="renderer-wrapper">
       <div #wrapper class="inner-renderer-wrapper" (window:resize)="updateZoom()">
         <div class="zoom-container" [ngStyle]="style">
           <app-swipe-container (pageChange)="swipe($event)" [disabled]="swipeDisabled" [animationDisabled]="swipeAnimationDisabled">
-            <app-renderer [htmlContent]="textTvPage?.htmlContent" (linkClick)="onLinkClick($event)"></app-renderer> 
+            <app-renderer [htmlContent]="textTvPage?.htmlContent" (linkClick)="onLinkClick($event)"></app-renderer>
           </app-swipe-container>
         </div>
       </div>

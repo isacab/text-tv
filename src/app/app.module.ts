@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { MainModule } from './modules/main/main.module';
 import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { LocationStrategy, HashLocationStrategy, APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,8 +17,12 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production && environment.client === 'web' }),
     MainModule
+  ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: APP_BASE_HREF, useValue: '/' },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,45 +1,82 @@
+@import '../../../../../styles/variables.scss';
+
 .app-root {
+    .renderer-wrapper {
+        overflow-y: auto;
+        flex: 1;
+        display: flex;
+    }
+
+    .inner-renderer-wrapper {
+        margin: 16px auto 0 auto;
+        position: relative;
+    }
+    
+    app-loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.app-root.env-web {
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: #fff;
+
+    .app-main {
+        flex: 1 1 auto;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        user-select: text;
+    }
+    
+    .app-footer {
+        flex: 0 0 $footer-height;
+    }
+
+    .inner-renderer-wrapper {
+        max-width: 665px;
+        min-width: 665px;
+    }
 }
 
-.app-main {
-    flex: 1 1 auto;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    user-select: text;
-}
+.app-root.env-android {
+    display: block;
+    min-height: 100vh;
+    
+    .app-main {
+        user-select: text;
+        min-height: calc(100vh - 52px);
+        margin-bottom: $footer-height;
+    }
+    
+    .app-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: $footer-height;
+    }
+    
+    app-loading-overlay {
+        height: calc(100vh - $footer-height);
+    }
 
-.app-footer {
-    flex: 0 0 52px;
-}
-
-.renderer-wrapper {
-    overflow-y: auto;
-    flex: 1;
-    display: flex;
-}
-
-.inner-renderer-wrapper {
-    max-width: 665px;
-    min-width: 665px;
-    margin: 16px auto 0 auto;
-    position: relative;
-}
-
-app-loading-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
+    .inner-renderer-wrapper {
+        min-width: initial;
+        max-width: initial;
+        width: 100%;
+    }
 }
 
 @media (max-width: 665px) {
     .inner-renderer-wrapper {
-        min-width: 100%;
-        max-width: 100%;
+        min-width: initial;
+        max-width: initial;
+        width: 100%;
         margin: 0 auto 0 auto;
     }
 }
@@ -48,6 +85,7 @@ app-loading-overlay {
     .app-root {
         background-color: #000;
     }
+
     .app-main {
         margin-top: 0;
         display: flex;

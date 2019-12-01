@@ -4,6 +4,7 @@ import { TextTvService } from 'src/app/services/text-tv.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '../../components/swipe-container/swipe-container.component';
 import { environment } from '../../../../../environments/environment';
+import { AndroidInterfaceService } from 'src/app/services/android-interface.service';
 
 declare var window: any;
 declare var DocumentTouch: any;
@@ -17,21 +18,26 @@ export class MainComponent implements OnInit, OnDestroy {
 
   private _textTvPage: TextTvPage;
   private _textTvPageSubscription: Subscription;
+  private _androidInterfaceSubscription: Subscription;
 
+  @ViewChild('scrollWrapper', { static: true }) scrollWrapperRef: ElementRef;
   @ViewChild('wrapper', { static: true }) wrapperRef: ElementRef;
 
   style: any;
+  envClass: string;
   swipeDisabled = false;
   swipeAnimationDisabled = true;
   showLoadingOverlay = false;
 
   constructor(
     private textTvService: TextTvService,
+    private androidInterface: AndroidInterfaceService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.envClass = ['web', 'android'].includes(environment.client) ? 'env-' + environment.client : 'env-web';
     this.updateZoom();
     this.route.paramMap.subscribe(params => {
       let param = params.get('page');
@@ -42,6 +48,11 @@ export class MainComponent implements OnInit, OnDestroy {
       this.loadPage(page);
     });
     this.swipeDisabled = this.isDesktop() && environment.production;
+    this._androidInterfaceSubscription = this.androidInterface.refreshing.subscribe(refreshing => {
+      if(refreshing) {
+        this.refresh(false);
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -60,8 +71,8 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadPage(page: number) {
-    this.showLoadingOverlay = true;
+  loadPage(page: number, showLoadingOverlay: boolean = true) {
+    this.showLoadingOverlay = showLoadingOverlay;
 
     if (this._textTvPageSubscription) {
       this._textTvPageSubscription.unsubscribe();
@@ -71,9 +82,11 @@ export class MainComponent implements OnInit, OnDestroy {
       res => {
         this.textTvPage = res;
         this.showLoadingOverlay = false;
+        this.androidInterface.setRefreshing(false);
       }, err => {
         this.textTvPage = err;
         this.showLoadingOverlay = false;
+        this.androidInterface.setRefreshing(false);
       }
     );
 
@@ -97,8 +110,8 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-  refresh() {
-    this.loadPage(this.textTvPage.pageNumber);
+  refresh(showLoadingOverlay: boolean = true) {
+    this.loadPage(this.textTvPage.pageNumber, showLoadingOverlay);
   }
 
   next() {

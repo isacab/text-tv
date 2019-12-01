@@ -12,6 +12,7 @@ import { HotkeyModule } from 'angular2-hotkeys';
 import { SwipeContainerComponent, Direction } from './components/swipe-container/swipe-container.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
@@ -41,6 +42,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HotkeyModule.forRoot(),
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     TextTvService,

@@ -1,0 +1,13 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+}
+
+body * {
+    touch-action: pan-y !important;
+}
+
+@import 'styles/fonts.scss';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
