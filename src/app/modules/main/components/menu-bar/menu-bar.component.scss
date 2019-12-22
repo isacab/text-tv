@@ -1,6 +1,4 @@
-$menu-bg-color: #161a1b; /*#222327*/; /*#333;*/
-$menu-item-active-bg-color: #7b7b7b;
-$menu-item-hover-bg-color: $menu-bg-color;
+@import '../../../../../styles/variables.scss';
 
 :host {
     background-color: $menu-bg-color;
@@ -14,7 +12,12 @@ $menu-item-hover-bg-color: $menu-bg-color;
     display: flex;
     margin: auto;
     max-width: 665px;
-    height: 52px;
+    height: $footer-height-lg;
+}
+
+.menu-item > .menu-action-btn.prev-arrow-down, 
+.menu-item > .menu-action-btn.next-arrow-up {
+    display: none;
 }
 
 .menu-item {
@@ -23,6 +26,8 @@ $menu-item-hover-bg-color: $menu-bg-color;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    width: 0;
+    overflow: hidden;
 }
 
 .menu-item > .menu-action-btn {
@@ -40,4 +45,38 @@ $menu-item-hover-bg-color: $menu-bg-color;
 
 .menu-item > .menu-action-btn .material-icons {
     font-size: 32px;
+}
+
+.menu-container.vertical {
+    display: flex;
+    margin: auto;
+    max-width: initial;
+    width: $footer-width-landscape;
+    height: 100vh;
+    flex-direction: column-reverse;
+
+    .menu-item {
+        width: initial;
+    }
+    
+    /*.menu-item > .menu-action-btn.prev-arrow-down, 
+    .menu-item > .menu-action-btn.next-arrow-up {
+        display: initial;
+    }
+    .menu-item > .menu-action-btn.prev-arrow-left, 
+    .menu-item > .menu-action-btn.next-arrow-right {
+        display: none;
+    }*/
+}
+
+@media screen and (orientation: landscape) and (max-height: 200px) {
+    .menu-container.vertical.page-input-focused .menu-item:not(.page-number-item) {
+        display: none;
+    }
+}
+
+@media (max-width: 700px)  {
+    .menu-container {
+        height: $footer-height-sm;
+    }
 }

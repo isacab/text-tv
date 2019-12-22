@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
   LinearLayout mOverlay;
   CompositeDisposable mSubscriptions = new CompositeDisposable();
 
+  int resumeCount = 0;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -41,14 +43,16 @@ public class MainActivity extends AppCompatActivity {
     mWebView.setWebViewClient(new WebViewClient() {
       @Override
       public void onPageFinished(WebView view, String url) {
-        Log.d("TextTvPageFragment", "onPageFinished");
+        // Log.d("TextTvPageFragment", "onPageFinished");
         mOverlay.setVisibility(LinearLayout.GONE);
       }
     });
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       mWebView.setWebContentsDebuggingEnabled(true);
     }
-    mWebView.loadUrl("file:///android_asset/www/index.html");
+    if (savedInstanceState == null) {
+      mWebView.loadUrl("file:///android_asset/www/index.html");
+    }
 
     mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
     //mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorAccent);
@@ -84,11 +88,32 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
+  protected void onResume() {
+    super.onResume();
+    if(this.resumeCount > 0) {
+      this.mAppState.triggerResume(this.resumeCount);
+    }
+    this.resumeCount++;
+  }
+
+  @Override
   public void onBackPressed() {
     if (mWebView.canGoBack()) {
       mWebView.goBack();
     } else {
       super.onBackPressed();
     }
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState ) {
+    super.onSaveInstanceState(outState);
+    mWebView.saveState(outState);
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    mWebView.restoreState(savedInstanceState);
   }
 }

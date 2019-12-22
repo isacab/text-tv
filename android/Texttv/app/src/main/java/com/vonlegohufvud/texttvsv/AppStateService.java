@@ -5,12 +5,15 @@ import android.os.Looper;
 import android.util.Log;
 
 import io.reactivex.Observable;
+import io.reactivex.subjects.AsyncSubject;
 import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 public class AppStateService {
 
   BehaviorSubject<Integer> mPageSubject = BehaviorSubject.create();
   BehaviorSubject<Boolean> mRefreshingSubject = BehaviorSubject.create();
+  AsyncSubject<Integer> mResumeSubject = AsyncSubject.create();
 
   public AppStateService() {
   }
@@ -20,7 +23,7 @@ public class AppStateService {
   }
 
   public void setPage(Integer value) {
-    Log.d("setPage", value.toString());
+    // Log.d("setPage", value.toString());
     if (mPageSubject.getValue() != value) {
       new Handler(Looper.getMainLooper()).post(new RunnableWithArg(value) {
         @Override
@@ -36,7 +39,7 @@ public class AppStateService {
   }
 
   public void setRefreshing(Boolean value) {
-    Log.d("setRefreshing", value.toString());
+    // Log.d("setRefreshing", value.toString());
     if (mRefreshingSubject.getValue() != value) {
       new Handler(Looper.getMainLooper()).post(new RunnableWithArg(value) {
         @Override
@@ -45,6 +48,14 @@ public class AppStateService {
         }
       });
     }
+  }
+
+  public Observable onResume() {
+    return mResumeSubject.hide();
+  }
+
+  public void triggerResume(Integer count) {
+    this.mResumeSubject.onNext(count);
   }
 }
 

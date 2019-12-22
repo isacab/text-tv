@@ -1,31 +1,24 @@
+@import './variables.scss';
+
 pre.root {
-    background-color: #000;
+    background-color: $dark-background-color;
     line-height: initial;
-    margin: 0 auto 0 -10px;
+    margin: 0 auto 0 -8px;
     width: auto;
     letter-spacing: 1.2px;
     font-family: "Inconsolata", monospace;
     user-select: text;
-}
-span {
-    image-rendering: pixelated !important;
+    overflow: hidden; 
+    padding: 1em 0 0 0;
+    border-bottom: 1em solid $dark-background-color;
 }
 span.W,span.B,span.Y,span.BK,span.G,span.C,span.R {
     position: relative;
     z-index: 2;
 }
-pre.root span::after {
-    content: "";
-    position: absolute;
-    right: -1px;
-    top: 1;
-    bottom: -1px;
-    left: 1;
-    background: inherit;
-    z-index: -1;
-}
 pre.root span {
     background-repeat: no-repeat !important;
+    image-rendering: pixelated !important;
 }
 pre.root a:active {
     background-color: #92bfeb6b;
@@ -39,8 +32,54 @@ pre.root a:active {
     text-align: center;   
 }
 
-@media(max-width: 600px) {
+@media(max-width: 700px), (max-height: 600px) {
     pre.root:first-of-type {
         padding-top: 2px;
     }
 }
+
+/* Theme double height titles */
+.double-height-titles pre.root {
+    line-height: 15.2px;
+}
+.double-height-titles pre.root span {
+    display: inline-block;
+    height: 15.2px;
+    line-height: 15.2px;
+}
+.double-height-titles pre.root .DH {
+    display: inline-block;
+    font-size: inherit;
+    letter-spacing: inherit;
+    //border-bottom: 1em solid $dark-background-color;
+    height: 30.4px;
+}
+.double-height-titles pre.root .DH > .SC {
+    display: inline-block;
+    transform: scale(1,2);
+    transform-origin: top;
+    font-size: inherit;
+    letter-spacing: inherit;
+}
+/*.double-height-titles pre.root .DH > .DH {
+    border-bottom: 0;
+}
+.double-height-titles pre.root span::after {
+    content: " ";
+    position: absolute;
+    right: 0;
+    top: calc(1em + 1px);
+    left: 0;
+    background: $dark-background-color;
+    z-index: -1;
+}
+.double-height-titles pre.root span::before {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background: inherit;
+    z-index: -1;
+}*/

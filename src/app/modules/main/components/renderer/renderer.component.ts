@@ -6,19 +6,32 @@ import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output, Elem
   styleUrls: ['./renderer.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RendererComponent implements OnInit {
+export class RendererComponent implements OnInit, OnChanges {
 
   @Input() htmlContent: string;
+  @Input() theme: 'default' | 'double-height-titles';
 
   @ViewChild('wrapper', { static: true }) wrapperRef: ElementRef;
 
   @Output() linkClick = new EventEmitter<string>();
 
   style: any;
+  themeClass: string;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.theme) {
+      switch(this.theme) {
+        case 'double-height-titles': this.themeClass = 'double-height-titles';
+          break;
+        default: this.themeClass = '';
+          break;
+      }
+    }
   }
 
   onClick(event: MouseEvent) {
@@ -29,6 +42,18 @@ export class RendererComponent implements OnInit {
       if (/*UrlUtils.isSameOrigin(target.href) && */ navigateWithinSameTab) {
         event.preventDefault();
         this.linkClick.emit(target.href);
+      }
+    } else {
+      this.ClearSelection();
+    }
+  }
+
+  ClearSelection() {
+    if (window.getSelection) {
+      if (window.getSelection().empty) {  // Chrome
+        window.getSelection().empty();
+      } else if (window.getSelection().removeAllRanges) {  // Firefox
+        window.getSelection().removeAllRanges();
       }
     }
   }

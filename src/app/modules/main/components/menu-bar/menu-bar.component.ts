@@ -10,11 +10,13 @@ import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 export class MenuBarComponent implements OnInit {
 
   @Input() page: number;
+  @Input() direction: 'horizontal' | 'vertical';
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() prevClick = new EventEmitter();
   @Output() nextClick = new EventEmitter();
   @Output() settingsClick = new EventEmitter();
+  @Output() refreshClick = new EventEmitter();
 
   @ViewChild(PageNumberInputComponent, { static: true }) pageNumberInputRef: PageNumberInputComponent;
 
@@ -44,13 +46,11 @@ export class MenuBarComponent implements OnInit {
   }
 
   refresh() {
-    this.pageChange.emit(this.page);
+    this.refreshClick.emit();
   }
 
-  pageInputChange(e) {
-    this.pageChange.emit(this.page);
+  pageInputChange(newPage: number) {
+    this.pageChange.emit(newPage);
   }
-
-
 
 }

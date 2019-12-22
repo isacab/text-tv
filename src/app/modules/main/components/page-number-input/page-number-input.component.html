@@ -1,1 +1,14 @@
-<input #Input class="page-input" [(ngModel)]="page" (ngModelChange)="change($event)" (click)="onClick($event)" type="number" maxlength="3" size="3" max="899" min="100" step="1"/>
+<div class="page-input-field">
+    <input #Input class="page-input" [(ngModel)]="page" (ngModelChange)="change($event)" 
+        (click)="onClick($event)" 
+        (mousedown)="onMouseDown($event)" 
+        (focus)="onFocusChange()" 
+        (focusout)="onFocusChange()"
+        (keydown)="onKeyDown($event)" 
+        type="number" 
+        maxlength="3" 
+        size="3" 
+        max="899" 
+        min="100" 
+        step="1"/>
+</div>

@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -11,11 +11,11 @@ export class AndroidInterfaceService {
 
   private pageSubject = new Subject<number>();
   private refreshingSubject = new BehaviorSubject<boolean>(false);
-  private refreshEnabledSubject = new BehaviorSubject<boolean>(false);
+  private resumeSubject = new Subject<void>();
 
-  constructor(zone: NgZone) {
+  constructor() {
     if(!window.Android && !environment.production && environment.client == 'android') { // use mock interface when debugging android app in browser
-      window.Android = new MockAndroidInterface(zone);
+      window.Android = new MockAndroidInterface();
     }
     if (window.Android) {
       window.Android.receiveMessage = (message: string, details: any) => {
@@ -26,9 +26,8 @@ export class AndroidInterfaceService {
           case 'refreshing_changed': 
             this.refreshingSubject.next(details);
             break;
-          case 'refresh_enabled_changed':
-            this.refreshEnabledSubject.next(details);
-            break;
+          case 'resumed':
+            this.resumeSubject.next();
         }
       };
       window.Android.onMessage("window.Android.receiveMessage");
@@ -55,22 +54,21 @@ export class AndroidInterfaceService {
     }
   }
 
-  get refreshEnabled(): Observable<boolean> {
-    return this.refreshEnabledSubject.asObservable();
-  }
-  setRefreshEnabled(value: boolean): void {
-    if(window.Android && this.refreshEnabledSubject.getValue() != value) {
-      console.log('setRefreshEnabled', value);
-      window.Android.setRefreshEnabled(value);
-    }
+  get onResume(): Observable<void> {
+    return this.resumeSubject.asObservable();
   }
 }
 
 class MockAndroidInterface {
 
   private callback: string;
+  private resumeCounter = 0;
 
-  constructor(private zone: NgZone) {}
+  constructor() {
+    window.addEventListener('focus', (event) => {
+      this.runCallback('resumed', ++this.resumeCounter);
+    });
+  }
 
   onMessage(callback: string) {
     if(typeof callback !== 'string')
@@ -78,21 +76,18 @@ class MockAndroidInterface {
     this.callback = callback.replace(/^window\./i, '');
   }
 
-  setRefreshEnabled(value: boolean) {
-    this.runCallback('refresh_enabled_changed', value);
+  setPage(value: number) {
+      this.runCallback('page_changed', value);
   }
 
   setRefreshing(value: boolean) {
     this.runCallback('refreshing_changed', value);
   }
 
-  setPage(value: number) {
-      this.runCallback('page_changed', value);
-  }
-
   private runCallback(message: string, value: any) {
     if(this.callback) {
       setTimeout(() => {
+        console.log(message, value);
         let fun = window;
         this.callback.split('.').forEach(x => fun = fun[x]);
         fun(message, value);

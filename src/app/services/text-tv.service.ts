@@ -81,6 +81,8 @@ export class TextTvService {
       return null;
     }
 
+    this.insertScaleElements(doc);
+
     const contentElements = doc.querySelectorAll('pre.root,a.preclass');
 
     if (contentElements.length) {
@@ -102,10 +104,23 @@ export class TextTvService {
     return html.join('');
   }
 
-  fixFirstPageFooter(doc: Element): void {
+  private insertScaleElements(doc: Element): void {
+    const dhElements = doc.querySelectorAll('span.DH');
+    dhElements.forEach((dhEl: HTMLSpanElement) => {
+      if(dhEl.parentElement && dhEl.parentElement.classList && !dhEl.parentElement.classList.contains('DH')) {
+        let style = '';
+        if(dhEl.style.backgroundImage) {
+          style = ` style="background-image: ${dhEl.style.backgroundImage}"`;
+        }
+        dhEl.innerHTML = `<span class="SC"${style}>${dhEl.innerHTML}</span>`;
+      }
+    });
+  }
+
+  private fixFirstPageFooter(doc: Element): void {
     const footerTextEl = doc.querySelector('pre.root>span:last-child');
     if(footerTextEl && footerTextEl.innerHTML.match(/^Inrikes[ ]*<a.*a>[ ]*Utrikes[ ]*<a.*a>[ ]*Innehåll[ ]*<a.*a>$/)) {
-      (footerTextEl.previousSibling as HTMLElement).style.zIndex = '1';
+      // (footerTextEl.previousSibling as HTMLElement).style.zIndex = '1';
       footerTextEl.parentNode.insertBefore(footerTextEl, footerTextEl.previousSibling);
     }
   }

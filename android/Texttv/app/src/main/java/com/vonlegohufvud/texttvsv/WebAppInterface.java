@@ -70,6 +70,12 @@ public class WebAppInterface {
         public void accept(Boolean res) {
           runCallbacks(mMessageCallbacks, "refreshing_changed", res);
         }
+      }),
+      mAppState.onResume().subscribe(new Consumer<Boolean>() {
+        @Override
+        public void accept(Boolean res) {
+          runCallbacks(mMessageCallbacks, "resumed", res);
+        }
       })
     );
   }

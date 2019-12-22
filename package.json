@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "build-cordova": "ng build --prod --base-href= --output-path=cordova/TextTvSv/www --serviceWorker=false",
     "build-android": "ng build text-tv-android --prod --base-href= --output-path=android/Texttv/app/src/main/assets/www --serviceWorker=false",
-    "build-android-dev": "ng build text-tv-android -c=android --base-href= --output-path=android/Texttv/app/src/main/assets/www --serviceWorker=false"
+    "build-android-dev": "ng build text-tv-android -c=android --base-href= --output-path=android/Texttv/app/src/main/assets/www --serviceWorker=false",
+    "serve-android": "ng serve text-tv-android -c=android"
   },
   "private": true,
   "dependencies": {

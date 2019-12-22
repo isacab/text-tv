@@ -1,10 +1,10 @@
-<div [ngClass]="['app-root', envClass]">
+<div [ngClass]="['app-root', envClass, orientationClass]" (window:resize)="windowSizeChanged()">
   <div class="app-main">
     <div #scrollWrapper class="renderer-wrapper">
-      <div #wrapper class="inner-renderer-wrapper" (window:resize)="updateZoom()">
+      <div #wrapper class="inner-renderer-wrapper">
         <div class="zoom-container" [ngStyle]="style">
           <app-swipe-container (pageChange)="swipe($event)" [disabled]="swipeDisabled" [animationDisabled]="swipeAnimationDisabled">
-            <app-renderer [htmlContent]="textTvPage?.htmlContent" (linkClick)="onLinkClick($event)"></app-renderer>
+            <app-renderer [htmlContent]="textTvPage?.htmlContent" theme="double-height-titles" (linkClick)="onLinkClick($event)"></app-renderer>
           </app-swipe-container>
         </div>
       </div>
@@ -12,6 +12,6 @@
     <app-loading-overlay *ngIf="showLoadingOverlay"></app-loading-overlay>
   </div>
   <div class="app-footer">
-    <app-menu-bar [page]="textTvPage?.pageNumber" (pageChange)="pageChange($event)" (refresh)="refresh()" (nextClick)="next()" (prevClick)="prev()"></app-menu-bar>
+    <app-menu-bar [page]="pageNumber" [direction]="menuDirection" (pageChange)="pageChange($event)" (refreshClick)="refresh()" (nextClick)="next()" (prevClick)="prev()"></app-menu-bar>
   </div>
 </div>

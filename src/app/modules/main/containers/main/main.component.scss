@@ -1,15 +1,17 @@
 @import '../../../../../styles/variables.scss';
 
 .app-root {
+    background-color: $dark-background-color;
     .renderer-wrapper {
         overflow-y: auto;
+        overflow-x: hidden;
         flex: 1;
         display: flex;
     }
 
     .inner-renderer-wrapper {
-        margin: 16px auto 0 auto;
         position: relative;
+        margin: 16px auto 0 auto;
     }
     
     app-loading-overlay {
@@ -34,7 +36,7 @@
     }
     
     .app-footer {
-        flex: 0 0 $footer-height;
+        flex: 0 0 $footer-height-lg;
     }
 
     .inner-renderer-wrapper {
@@ -49,8 +51,8 @@
     
     .app-main {
         user-select: text;
-        min-height: calc(100vh - 52px);
-        margin-bottom: $footer-height;
+        min-height: calc(100vh - $footer-height-lg);
+        margin-bottom: $footer-height-lg;
     }
     
     .app-footer {
@@ -58,45 +60,90 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: $footer-height;
+        height: $footer-height-lg;
     }
     
     app-loading-overlay {
-        height: calc(100vh - $footer-height);
+        position: fixed;
+        height: calc(100vh - $footer-height-lg);
     }
 
     .inner-renderer-wrapper {
         min-width: initial;
         max-width: initial;
         width: 100%;
-    }
-}
-
-@media (max-width: 665px) {
-    .inner-renderer-wrapper {
-        min-width: initial;
-        max-width: initial;
-        width: 100%;
-        margin: 0 auto 0 auto;
     }
 }
 
 @media (max-width: 700px) {
     .app-root {
-        background-color: #000;
-    }
-
-    .app-main {
-        margin-top: 0;
-        display: flex;
-    }
+        .app-main {
+            display: flex;
+        }
+        
+        .inner-renderer-wrapper {
+            min-width: initial;
+            max-width: initial;
+            width: 100%;
+            display: flex;
+            flex: 1;
+            margin: 0 auto 0 auto;
+        }
     
-    .inner-renderer-wrapper {
-        display: flex;
-        flex: 1;
+        .zoom-container {
+            flex: 1;
+        }
     }
+    .app-root.env-web {
+        .app-footer {
+            flex: 0 0 $footer-height-sm;
+        }
+    }
+    .app-root.env-android {
+        
+        .app-main {
+            user-select: text;
+            min-height: calc(100vh - #{$footer-height-sm});
+            margin-bottom: $footer-height-sm;
+        }
+        
+        .app-footer {
+            height: $footer-height-sm;
+        }
 
-    .zoom-container {
-        flex: 1;
+        app-loading-overlay {
+            height: calc(100vh - #{$footer-height-sm});
+        }
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 450px) {
+    .app-root.env-android.landscape {
+
+        .app-main {
+            min-height: 100vh;
+            margin-bottom: 0;
+            margin-right: $footer-width-landscape;
+        }
+    
+        .app-footer {
+            bottom: 0;
+            left: initial;
+            right: 0;
+            top: 0;
+            width: $footer-width-landscape;
+            height: 100vh;
+        }
+        
+        app-loading-overlay {
+            height: 100vh;
+            margin-right: $footer-width-landscape;
+        }
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 600px) {
+    .app-root.env-android.landscape .inner-renderer-wrapper {
+        margin-top: 0;
     }
 }

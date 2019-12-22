@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-page-number-input',
@@ -7,8 +7,11 @@ import { Component, OnInit, Input, EventEmitter, Output, ElementRef, ViewChild }
 })
 export class PageNumberInputComponent implements OnInit {
 
+  private prevActiveElement: any;
+
   @Input() page: number;
   @Output() pageChange = new EventEmitter<number>();
+  @Output() focusChange = new EventEmitter<boolean>();
 
   @ViewChild('Input', { static: true }) inputRef: ElementRef;
 
@@ -18,21 +21,51 @@ export class PageNumberInputComponent implements OnInit {
   }
 
   change(value: number): void {
-    if (value.toString().length > 3) {
+    if (this.inputRef.nativeElement.value && this.inputRef.nativeElement.value.length > 3) {
       value = parseInt(value.toString().substr(0, 3), 10);
+      //this.inputRef.nativeElement.value = this.inputRef.nativeElement.value.substr(0, 3);
       this.page = value;
-    } else if (value >= 100 && value <= 999) {
+    } else {
       this.pageChange.emit(value);
     }
   }
 
-  onClick(event: Event) {
-    this.page = undefined;
+  onKeyDown(event: KeyboardEvent ) {
+    const key = event.key.toLowerCase();
+    if(['e', '.', ',', '+', '-'].includes(key)) {
+      event.preventDefault();
+    }
+  }
+
+  onMouseDown(event: MouseEvent) {
+    this.prevActiveElement = document.activeElement;
+  }
+
+  onClick(event: MouseEvent) {
+    if(this.prevActiveElement !== this.inputRef.nativeElement) {
+      this.resetPage();
+    }
+    event.stopPropagation();
   }
 
   focus() {
-    this.inputRef.nativeElement.focus();
+    if(document.activeElement !== this.inputRef.nativeElement) {
+      this.inputRef.nativeElement.focus();
+      this.resetPage();
+    }
+  }
+
+  hasFocus() {
+    return document.activeElement === this.inputRef.nativeElement;
+  }
+
+  resetPage() {
     this.page = undefined;
+    this.pageChange.emit(this.page);
+  }
+
+  onFocusChange() {
+    this.focusChange.emit(this.hasFocus());
   }
 
 }
