@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, fromEventPattern } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { TextTvPage } from '../models/text-tv-page';
 
 @Injectable({
   providedIn: 'root'

@@ -79,7 +79,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "5mb" 
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -248,7 +248,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "5mb" 
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -332,5 +332,8 @@
       }
     }
   },
-  "defaultProject": "text-tv"
+  "defaultProject": "text-tv",
+  "cli": {
+    "analytics": "2922be79-7cc0-41c3-9819-57bfe4000d66"
+  }
 }

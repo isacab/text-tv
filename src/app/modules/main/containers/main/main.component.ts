@@ -5,8 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '../../components/swipe-container/swipe-container.component';
 import { environment } from '../../../../../environments/environment';
 import { AndroidInterfaceService } from 'src/app/services/android-interface.service';
-import { withLatestFrom } from 'rxjs/internal/operators/withLatestFrom';
-import { map } from 'rxjs/operators';
+import { TextTvPage } from 'src/app/models/text-tv-page';
 
 declare var window: any;
 declare var DocumentTouch: any;

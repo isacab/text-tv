@@ -1,4 +1,4 @@
-interface TextTvPage {
+export interface TextTvPage {
     htmlContent: string;
     ok: boolean;
     pageNumber: number;
