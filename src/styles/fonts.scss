@@ -4,5 +4,29 @@
     src: url(assets/fonts/Inconsolata-Regular.ttf) format('truetype');
 }
 
+/* Fira Mono */
+@font-face {
+    font-family: 'Fira Mono';
+    src: url(assets/fonts/FiraMono-Regular.ttf) format('truetype');
+}
+
+/* Roboto Mono */
+@font-face {
+    font-family: 'Roboto Mono';
+    src: url(assets/fonts/RobotoMono-Regular.ttf) format('truetype');
+}
+
+/* Droid Sans Mono */
+@font-face {
+    font-family: 'Droid Sans Mono';
+    src: url(assets/fonts/DroidSansMono.ttf) format('truetype');
+}
+
+/* VT323 */
+@font-face {
+    font-family: 'VT323';
+    src: url(assets/fonts/VT323-Regular.ttf) format('truetype');
+}
+
 /* Material Icons */
 @import '~material-design-icons/iconfont/material-icons.css';

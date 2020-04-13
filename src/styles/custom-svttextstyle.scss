@@ -17,7 +17,7 @@ span.W,span.B,span.Y,span.BK,span.G,span.C,span.R {
     z-index: 2;
 }
 pre.root span {
-    background-repeat: no-repeat !important;
+    /*background-repeat: no-repeat !important;*/
     image-rendering: pixelated !important;
 }
 pre.root a:active {
@@ -36,6 +36,10 @@ pre.root a:active {
     pre.root:first-of-type {
         padding-top: 2px;
     }
+}
+
+.background-no-repeat pre.root span {
+    background-repeat: no-repeat !important;
 }
 
 /* Theme double height titles */
@@ -61,25 +65,116 @@ pre.root a:active {
     font-size: inherit;
     letter-spacing: inherit;
 }
-/*.double-height-titles pre.root .DH > .DH {
-    border-bottom: 0;
+
+/* Theme normal size titles */
+.normal-size-titles pre.root .DH {
+    font-size: inherit;
+    letter-spacing: inherit;
+    letter-spacing: inherit;
 }
-.double-height-titles pre.root span::after {
-    content: " ";
-    position: absolute;
-    right: 0;
-    top: calc(1em + 1px);
-    left: 0;
-    background: $dark-background-color;
-    z-index: -1;
+.normal-size-titles pre.root .DH > .SC {
+    font-size: inherit;
+    letter-spacing: inherit;
+    letter-spacing: inherit;
 }
-.double-height-titles pre.root span::before {
-    content: "";
-    position: absolute;
-    right: -1px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    background: inherit;
-    z-index: -1;
-}*/
+
+/* Font specific styling */
+div.font_inconsolata {
+    pre.root {
+        font-family: "Inconsolata", monospace;
+    }
+} 
+
+div.font_droid_sans_mono {
+    pre.root {
+        font-family: "Droid Sans Mono", monospace;
+        line-height: 17px;
+        letter-spacing: 1px;
+        margin-left: -9px;
+    }
+    pre.root .DH {
+        letter-spacing: -2.6px;
+    }
+    .double-height-titles pre.root span {
+        display: inline-block;
+        height: 17px;
+        line-height: 17px;
+    }
+    .double-height-titles pre.root .DH {
+        display: inline-block;
+        font-size: inherit;
+        letter-spacing: inherit;
+        height: 34px;
+    }
+}
+
+div.font_fira_mono {
+    pre.root {
+        font-family: "Fira Mono", monospace;
+        line-height: 17px;
+        letter-spacing: 1px;
+        margin-left: -9px;
+    }
+    pre.root .DH {
+        letter-spacing: -2.6px;
+    }
+    .double-height-titles pre.root span {
+        display: inline-block;
+        height: 17px;
+        line-height: 17px;
+    }
+    .double-height-titles pre.root .DH {
+        display: inline-block;
+        font-size: inherit;
+        letter-spacing: inherit;
+        height: 34px;
+    }
+}
+
+div.font_roboto_mono {
+    pre.root {
+        font-family: "Roboto Mono", monospace;
+        line-height: 17px;
+        letter-spacing: 1px;
+        margin-left: -9px;
+    }
+    pre.root .DH {
+        letter-spacing: -2.6px;
+    }
+    .double-height-titles pre.root span {
+        display: inline-block;
+        height: 17px;
+        line-height: 17px;
+    }
+    .double-height-titles pre.root .DH {
+        display: inline-block;
+        font-size: inherit;
+        letter-spacing: inherit;
+        height: 34px;
+    }
+}
+
+div.font_vt323 {
+    pre.root {
+        font-family: "VT323", monospace;
+        font-size: 18px;
+        line-height: 17px;
+        letter-spacing: 1.8px;
+        margin-left: -9px;
+    }
+    pre.root .DH {
+        letter-spacing: -1.4px;
+        font-size: 26px;
+    }
+    .double-height-titles pre.root span {
+        display: inline-block;
+        height: 17px;
+        line-height: 17px;
+    }
+    .double-height-titles pre.root .DH {
+        display: inline-block;
+        font-size: inherit;
+        letter-spacing: inherit;
+        height: 34px;
+    }
+}

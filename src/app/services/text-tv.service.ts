@@ -120,7 +120,7 @@ export class TextTvService {
 
   private fixFirstPageFooter(doc: Element): void {
     const footerTextEl = doc.querySelector('pre.root>span:last-child');
-    if(footerTextEl && footerTextEl.innerHTML.match(/^Inrikes[ ]*<a.*a>[ ]*Utrikes[ ]*<a.*a>[ ]*Innehåll[ ]*<a.*a>$/)) {
+    if(footerTextEl && footerTextEl.innerHTML.match(/Inrikes[ ]*<a.*a>[ ]*Utrikes[ ]*<a.*a>[ ]*Innehåll[ ]*<a.*a>/)) {
       // (footerTextEl.previousSibling as HTMLElement).style.zIndex = '1';
       footerTextEl.parentNode.insertBefore(footerTextEl, footerTextEl.previousSibling);
     }

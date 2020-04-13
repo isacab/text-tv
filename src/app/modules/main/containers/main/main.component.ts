@@ -1,11 +1,13 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { Observable, of, Subscription, timer } from 'rxjs';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, ApplicationRef } from '@angular/core';
+import { Observable, of, Subscription, timer, merge } from 'rxjs';
 import { TextTvService } from 'src/app/services/text-tv.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '../../components/swipe-container/swipe-container.component';
 import { environment } from '../../../../../environments/environment';
 import { AndroidInterfaceService } from 'src/app/services/android-interface.service';
 import { TextTvPage } from 'src/app/models/text-tv-page';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { delay, take } from 'rxjs/operators';
 
 declare var window: any;
 declare var DocumentTouch: any;
@@ -24,19 +26,32 @@ export class MainComponent implements OnInit, OnDestroy {
   @ViewChild('scrollWrapper', { static: true }) scrollWrapperRef: ElementRef;
   @ViewChild('wrapper', { static: true }) wrapperRef: ElementRef;
 
-  style: any;
-  envClass: string;
-  orientationClass: string;
+  init: boolean = false;
+  preferences: any;
+  style: any = {};
+  envClass: string = '';
+  orientationClass: string = '';
+  fontClass: string = '';
   showLoadingOverlay = false;
   swipeDisabled = false;
   swipeAnimationDisabled = true;
   pageNumber: number | string;
+  renderTheme: string = 'double-height-titles';
+
+  fontConfig = {
+    'Inconsolata': { class: 'font_inconsolata', contentWidth: 320, contentHeight: 388, letterWidth: 8 },
+    'Fira Mono': { class: 'font_fira_mono', contentWidth: 376, contentHeight: 432, letterWidth: 9 },
+    'Roboto Mono': { class: 'font_roboto_mono', contentWidth: 376, contentHeight: 432, letterWidth: 9 },
+    'Droid Sans Mono': { class: 'font_droid_sans_mono', contentWidth: 376, contentHeight: 432, letterWidth: 9 },
+    'VT323': { class: 'font_vt323', contentWidth: 352, contentHeight: 452, letterWidth: 9 },
+  };
 
   constructor(
     private textTvService: TextTvService,
     private androidInterface: AndroidInterfaceService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private appRef: ApplicationRef,
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +76,13 @@ export class MainComponent implements OnInit, OnDestroy {
     this.androidInterface.onResume.subscribe(() => {
       this.refresh(true);
     });
+    this.androidInterface.preferences.subscribe(preferences => {
+      this.applyPreferences(preferences);
+      this.init = true;
+    });
+    timer(1000).subscribe(() => {
+      this.init = true;
+    });
   }
 
   ngOnDestroy(): void {
@@ -81,6 +103,19 @@ export class MainComponent implements OnInit, OnDestroy {
 
   get menuDirection(): string {
     return this.orientationClass === 'portrait' ? 'horizontal' : 'vertical';
+  }
+
+  get currentFontConfig(): any {
+    const font = this.preferences && this.preferences.font;
+    return this.fontConfig[font] || this.fontConfig['Inconsolata'];
+  }
+
+  get totalMargin(): number {
+    let zoomLevel = 2;
+    if(this.preferences && this.preferences.zoomLevel != null) {
+      zoomLevel = parseInt(this.preferences.zoomLevel);
+    }
+    return this.currentFontConfig.letterWidth * 2 * zoomLevel;
   }
 
   loadPage(page: number, showLoadingOverlay: boolean = true) {
@@ -149,11 +184,26 @@ export class MainComponent implements OnInit, OnDestroy {
     this.pageChange(this.textTvPage.prevPageNumber);
   }
 
+  openSettings() {
+    this.androidInterface.openSettings();
+  }
+
   swipe(direction: Direction) {
     if(direction & Direction.LEFT) {
       this.next();
     } else if(direction & Direction.RIGHT) {
       this.prev();
+    }
+  }
+
+  applyPreferences(preferences: any): void {
+    console.log('applyPreferences', preferences);
+    if(preferences) {
+      this.preferences = preferences;
+      this.renderTheme = this.getRendererTheme(preferences);
+      this.fontClass = this.currentFontConfig.class;
+      this.swipeDisabled = !preferences.swipePageNavigation;
+      setTimeout(() => { this.updateZoom(); this.appRef.tick(); }, 0);
     }
   }
 
@@ -181,9 +231,17 @@ export class MainComponent implements OnInit, OnDestroy {
   
   updateZoom() {
     const wrapperRect = this.wrapperRef.nativeElement.getBoundingClientRect();
-    const textTvContentRect = { width: 320 + 16, height: 388 }; //{ width: 352, height: 388 };
+    const textTvContentRect = { width: this.currentFontConfig.contentWidth + this.totalMargin, height: this.currentFontConfig.contentHeight }; //{ width: 352, height: 388 };
     const zoom = Math.min(wrapperRect.width / textTvContentRect.width, 1.5);
     const scale = Math.min(zoom, 1);
     this.style = { 'zoom': zoom, 'transform': 'initial', 'transform-origin': 'initial', '-ms-zoom': zoom, '-webkit-zoom': zoom, '-moz-transform': `scale(${scale},${scale})`, '-moz-transform-origin': 'left top' }; 
+  }
+
+  getRendererTheme(preferences) {
+    switch(preferences.headerSize) {
+      case 'x1': return 'normal-size-titles';
+      case 'bigger_text': return 'default';
+      default: return 'double-height-titles';
+    }
   }
 }

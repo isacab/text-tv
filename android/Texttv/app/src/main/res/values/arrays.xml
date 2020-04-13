@@ -1,0 +1,51 @@
+<resources>
+
+  <!-- Font preference -->
+  <string-array name="fontEntries">
+    <item>Inconsolata</item>
+    <item>Fira Mono</item>
+    <item>Droid Sans Mono</item>
+    <item>Roboto Mono</item>
+    <item>VT323</item>
+  </string-array>
+  <string-array name="fontValues">
+    <item>Inconsolata</item>
+    <item>Fira Mono</item>
+    <item>Droid Sans Mono</item>
+    <item>Roboto Mono</item>
+    <item>VT323</item>
+  </string-array>
+
+  <!-- Heading size preference -->
+  <string-array name="headerSizeEntries">
+    <item>Dubbel höjd</item>
+    <item>Större text</item>
+    <item>Ingen skillnad</item>
+  </string-array>
+  <string-array name="headerSizeValues">
+    <item>x2</item>
+    <item>bigger_text</item>
+    <item>x1</item>
+  </string-array>
+
+  <!-- Zoom level preference -->
+  <string-array name="zoomLevelEntries">
+    <item>0</item>
+    <item>0.5</item>
+    <item>1</item>
+    <item>1.5</item>
+    <item>2</item>
+    <item>2.5</item>
+    <item>3</item>
+  </string-array>
+  <string-array name="zoomLevelValues">
+    <item>0</item>
+    <item>0.5</item>
+    <item>1</item>
+    <item>1.5</item>
+    <item>2</item>
+    <item>2.5</item>
+    <item>3</item>
+  </string-array>
+
+</resources>

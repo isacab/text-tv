@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, RouteReuseStrategy } from '@angular/router';
 import { MainComponent } from './modules/main/containers/main/main.component';
 import { environment } from 'src/environments/environment';
+import { ReuseOnSameComponentStrategy } from './strategies/reuse-on-same-component.strategy';
 
 const routes: Routes = [
   { path: ':page', component: MainComponent },
@@ -10,8 +11,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { useHash: true /*environment.client === 'android'*/ })
+    RouterModule.forRoot(routes, { useHash: environment.client === 'android' })
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: ReuseOnSameComponentStrategy }
+  ]
 })
 export class AppRoutingModule { }

@@ -9,7 +9,7 @@ import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output, Elem
 export class RendererComponent implements OnInit, OnChanges {
 
   @Input() htmlContent: string;
-  @Input() theme: 'default' | 'double-height-titles';
+  @Input() theme: 'default' | 'double-height-titles' | 'normal-size-titles';
 
   @ViewChild('wrapper', { static: true }) wrapperRef: ElementRef;
 
@@ -27,6 +27,8 @@ export class RendererComponent implements OnInit, OnChanges {
     if(changes.theme) {
       switch(this.theme) {
         case 'double-height-titles': this.themeClass = 'double-height-titles';
+          break;
+          case 'normal-size-titles': this.themeClass = 'normal-size-titles';
           break;
         default: this.themeClass = '';
           break;

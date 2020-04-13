@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 declare var window: any;
@@ -9,9 +9,11 @@ declare var window: any;
 })
 export class AndroidInterfaceService {
 
-  private pageSubject = new Subject<number>();
+  private pageSubject = new ReplaySubject<number>(1);
   private refreshingSubject = new BehaviorSubject<boolean>(false);
+  private preferencesSubject = new ReplaySubject<any>(1);
   private resumeSubject = new Subject<void>();
+  private pauseSubject = new Subject<void>();
 
   constructor() {
     if(!window.Android && !environment.production && environment.client == 'android') { // use mock interface when debugging android app in browser
@@ -19,6 +21,7 @@ export class AndroidInterfaceService {
     }
     if (window.Android) {
       window.Android.receiveMessage = (message: string, details: any) => {
+        console.log('window.Android.receiveMessage', message, details);
         switch(message) {
           case 'page_changed':
             this.pageSubject.next(details);
@@ -26,11 +29,17 @@ export class AndroidInterfaceService {
           case 'refreshing_changed': 
             this.refreshingSubject.next(details);
             break;
+          case 'preferences_changed':
+          case 'preferences_get':
+            this.preferencesSubject.next(details);
           case 'resumed':
             this.resumeSubject.next();
+          case 'paused':
+            this.pauseSubject.next();
         }
       };
       window.Android.onMessage("window.Android.receiveMessage");
+      window.Android.getPreferences();
     }
   }
 
@@ -54,8 +63,25 @@ export class AndroidInterfaceService {
     }
   }
 
+  get preferences(): Observable<any> {
+    return this.preferencesSubject.asObservable();
+  }
+
+  openSettings(): void {
+    if (window.Android) {
+      console.log('openSettings');
+      window.Android.openSettings();
+    }
+  }
+
   get onResume(): Observable<void> {
+    console.log('onResume');
     return this.resumeSubject.asObservable();
+  }
+
+  get onPause(): Observable<void> {
+    console.log('onPause');
+    return this.pauseSubject.asObservable();
   }
 }
 
@@ -63,6 +89,15 @@ class MockAndroidInterface {
 
   private callback: string;
   private resumeCounter = 0;
+  private preferences = {
+    // font: 'Fira Mono',
+    // font: 'Droid Sans Mono',
+    // font: 'Inconsolata',
+    // font: 'Roboto Mono',
+    font: 'hellovetica',
+    zoomLevel: 0,
+    headerSize: '1x',
+  };
 
   constructor() {
     window.addEventListener('focus', (event) => {
@@ -82,6 +117,13 @@ class MockAndroidInterface {
 
   setRefreshing(value: boolean) {
     this.runCallback('refreshing_changed', value);
+  }
+
+  getPreferences() {
+    this.runCallback('preferences_get', this.preferences);
+  }
+
+  openSettings() {
   }
 
   private runCallback(message: string, value: any) {
