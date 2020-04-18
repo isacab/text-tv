@@ -16,7 +16,7 @@
     android:theme="@style/AppTheme"
     android:usesCleartextTraffic="true">
     <activity
-      android:name=".SettingsActivity"
+      android:name=".SettingsActivityOld"
       android:label="@string/title_activity_settings"></activity>
     <activity
       android:name=".MainActivity"

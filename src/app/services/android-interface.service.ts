@@ -91,12 +91,12 @@ class MockAndroidInterface {
   private resumeCounter = 0;
   private preferences = {
     // font: 'Fira Mono',
-    // font: 'Droid Sans Mono',
+    font: 'Droid Sans Mono',
     // font: 'Inconsolata',
     // font: 'Roboto Mono',
-    font: 'hellovetica',
+    // font: 'VT323',
     zoomLevel: 0,
-    headerSize: '1x',
+    headerSize: '2x',
   };
 
   constructor() {

@@ -86,11 +86,12 @@ public class MainActivity extends AppCompatActivity {
       mAppState.getPreferences().subscribe(new Consumer<Map<String, ?>>() {
         @Override
         public void accept(Map<String, ?> res) {
-          if(mSwipeRefreshLayout.isEnabled() != ((Boolean)res.get("swipeRefresh")).booleanValue()) {
+          boolean value = res.get("swipeRefresh") != null ? ((Boolean)res.get("swipeRefresh")).booleanValue() : true;
+          if(mSwipeRefreshLayout.isEnabled() != value) {
             if (mSwipeRefreshLayout.isRefreshing()) {
               mSwipeRefreshLayout.setRefreshing(false);
             }
-            mSwipeRefreshLayout.setEnabled((Boolean)res.get("swipeRefresh"));
+            mSwipeRefreshLayout.setEnabled(value);
           }
         }
       }),

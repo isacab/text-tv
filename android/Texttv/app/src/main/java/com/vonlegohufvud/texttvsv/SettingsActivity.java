@@ -3,18 +3,13 @@ package com.vonlegohufvud.texttvsv;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
 import static androidx.preference.PreferenceManager.*;
 
-import android.view.Menu;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {

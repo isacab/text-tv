@@ -1,7 +1,6 @@
 package com.vonlegohufvud.texttvsv;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -9,7 +8,6 @@ import android.webkit.WebView;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -77,7 +75,7 @@ public class WebAppInterface {
   @JavascriptInterface
   public void openSettings() {
     try {
-      Intent i = new Intent(mActivity, SettingsActivity.class);
+      Intent i = new Intent(mActivity, SettingsActivityOld.class);
       mActivity.startActivityForResult(i, SETTINGS_REQUEST_CODE);
     } catch (Exception e) {
       Log.d("openSettings", e.getMessage() + e.getStackTrace().toString());
