@@ -11,6 +11,11 @@ pre.root {
     overflow: hidden; 
     padding: 1em 0 0 0;
     border-bottom: 1em solid $dark-background-color;
+    filter: initial;
+
+    span.B, span.bgB {
+        filter: hue-rotate(-38deg) brightness(1.3);
+    }
 }
 span.W,span.B,span.Y,span.BK,span.G,span.C,span.R {
     position: relative;
@@ -45,7 +50,7 @@ pre.root a:active {
 /* Theme double height titles */
 .double-height-titles pre.root {
     line-height: 15.2px;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 .double-height-titles pre.root span {
     display: inline-block;
@@ -55,7 +60,7 @@ pre.root a:active {
 .double-height-titles pre.root .DH {
     display: inline-block;
     font-size: inherit;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     //border-bottom: 1em solid $dark-background-color;
     height: 30.4px;
 }
@@ -64,7 +69,7 @@ pre.root a:active {
     transform: scale(1,2);
     transform-origin: top;
     font-size: inherit;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 /* Theme normal size titles */
@@ -88,7 +93,7 @@ div.font_vt323 {
     pre.root {
         font-family: "Droid Sans Mono", monospace;
         line-height: 17px;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         margin-left: -9px;
     }
     pre.root .DH {
@@ -109,7 +114,7 @@ div.font_vt323 {
     }
     .normal-size-titles pre.root .DH,
     .normal-size-titles pre.root .DH > .SC {
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
     }
 }
 
@@ -142,7 +147,9 @@ div.font_vt323 {
         font-size: 26px;
     }
     .normal-size-titles pre.root .DH,
-    .normal-size-titles pre.root .DH > .SC {
+    .normal-size-titles pre.root .DH > .SC,
+    .double-height-titles pre.root .DH,
+    .double-height-titles pre.root .DH > .SC {
         font-size: 18px;
         letter-spacing: 1.8px;
     }

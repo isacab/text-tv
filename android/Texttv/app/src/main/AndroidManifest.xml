@@ -16,9 +16,6 @@
     android:theme="@style/AppTheme"
     android:usesCleartextTraffic="true">
     <activity
-      android:name=".SettingsActivityOld"
-      android:label="@string/title_activity_settings"></activity>
-    <activity
       android:name=".MainActivity"
       android:configChanges="orientation|screenSize">
       <intent-filter>
@@ -27,6 +24,15 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity
+      android:name=".settings.SettingsActivityNested"
+      android:label="@string/title_activity_settings"></activity>
+    <activity
+      android:name=".settings.SettingsActivity"
+      android:label="@string/title_activity_settings" />
+    <activity
+      android:name=".settings.SettingsAppearanceActivity"
+      android:label="@string/title_activity_settings_appearance"></activity>
   </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-<div [ngClass]="['app-root', envClass, orientationClass, fontClass, preferences?.backgroundNoRepeat ? 'background-no-repeat' : 'background-repeat']" (window:resize)="windowSizeChanged()">
+<div [ngClass]="['app-root', envClass, orientationClass, fontClass, viewModeClass, preferences?.backgroundNoRepeat ? 'background-no-repeat' : 'background-repeat']" (window:resize)="windowSizeChanged()">
   <div class="app-main">
     <div #scrollWrapper class="renderer-wrapper">
       <div #wrapper class="inner-renderer-wrapper">

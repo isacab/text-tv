@@ -32,6 +32,7 @@ export class MainComponent implements OnInit, OnDestroy {
   envClass: string = '';
   orientationClass: string = '';
   fontClass: string = '';
+  viewModeClass: string = '';
   showLoadingOverlay = false;
   swipeDisabled = false;
   swipeAnimationDisabled = true;
@@ -66,6 +67,11 @@ export class MainComponent implements OnInit, OnDestroy {
       }
       const page = parseInt(param, 10);
       this.loadPage(page);
+    });
+    this.route.queryParamMap.subscribe(queryParams => {
+      if(parseInt(queryParams.get('preview_mode'))) {
+        this.viewModeClass = 'preview-mode';
+      }
     });
     this.swipeDisabled = this.isDesktop() && environment.production;
     this.androidInterface.refreshing.subscribe(refreshing => {

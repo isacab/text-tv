@@ -95,8 +95,8 @@ class MockAndroidInterface {
     // font: 'Inconsolata',
     // font: 'Roboto Mono',
     // font: 'VT323',
-    zoomLevel: 0,
-    headerSize: '2x',
+    zoomLevel: 1,
+    headerSize: 'x2',
   };
 
   constructor() {

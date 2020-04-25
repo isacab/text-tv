@@ -1,4 +1,4 @@
-package com.vonlegohufvud.texttvsv;
+package com.vonlegohufvud.texttvsv.shared;
 
 import android.content.Context;
 import android.util.AttributeSet;

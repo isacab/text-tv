@@ -6,39 +6,106 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.vonlegohufvud.texttvsv.CustomSwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+    <fragment
+      android:name="com.vonlegohufvud.texttvsv.texttv.TextTvFragment"
+      android:id="@+id/textTvFragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:minHeight="0dp"
+      android:layout_marginStart="0dp"
+      android:layout_marginEnd="0dp"
+      android:background="@color/colorBackground"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      tools:context=".activities.MainActivity"
+      android:contentInsetLeft="0dp"
+      android:contentInsetStart="0dp"
+      app:contentInsetLeft="0dp"
+      app:contentInsetStart="0dp"
+      android:contentInsetRight="0dp"
+      android:contentInsetEnd="0dp"
+      app:contentInsetRight="0dp"
+      app:contentInsetEnd="0dp">
+
+      <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground">
+        android:layout_height="56dp">
 
-        <WebView
-            android:id="@+id/web_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackground"
-            android:overScrollMode="never"
-            >
-        </WebView>
+        <ImageButton
+          android:id="@+id/imageButtonSettings"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:srcCompat="@drawable/ic_settings_white_24dp"
+          android:background="?attr/selectableItemBackgroundBorderless"
+          android:layout_weight="1"
+          android:padding="0dp"
+          android:layout_margin="0dp"/>
 
-    </com.vonlegohufvud.texttvsv.CustomSwipeRefreshLayout>
+        <ImageButton
+          android:id="@+id/imageButtonPrev"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:srcCompat="@drawable/ic_keyboard_arrow_left_white_24dp"
+          android:background="?attr/selectableItemBackgroundBorderless"
+          android:layout_weight="1"
+          android:padding="0dp"
+          android:layout_margin="0dp"/>
 
-    <LinearLayout
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:baselineAligned="false"
-        android:orientation="vertical">
+        <EditText
+          android:id="@+id/editTextPageNumber"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:inputType="number"
+          android:layout_weight="1"
+          android:padding="0dp"
+          android:layout_margin="0dp"
+          android:textColor="#fff"
+          android:outlineAmbientShadowColor="#fff"
+          android:outlineSpotShadowColor="#fff"
+          android:shadowColor="#fff"
+          android:textColorHighlight="#fff"
+          android:textColorHint="#fff"
+          android:textColorLink="#fff"/>
 
-      <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text=""
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#fff"
-        android:textSize="24sp" />
-    </LinearLayout>
+        <ImageButton
+          android:id="@+id/imageButtonNext"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:srcCompat="@drawable/ic_keyboard_arrow_right_white_24dp"
+          android:background="?attr/selectableItemBackgroundBorderless"
+          android:layout_weight="1"
+          android:padding="0dp"
+          android:layout_margin="0dp"/>
+
+        <ImageButton
+          android:id="@+id/imageButtonRefresh"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:srcCompat="@drawable/ic_refresh_white_24dp"
+          android:background="?attr/selectableItemBackgroundBorderless"
+          android:layout_weight="1"
+          android:padding="0dp"
+          android:layout_margin="0dp"/>
+
+      </LinearLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+  <!--<com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/nav_view"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp"
+    android:background="?android:attr/windowBackground"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:menu="@menu/bottom_nav_menu" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
