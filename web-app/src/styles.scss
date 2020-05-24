@@ -1,0 +1,24 @@
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--ion-background-color);
+    color: #fff;
+}
+
+/*body * {
+    touch-action: pan-y !important;
+}*/
+
+@import "~swiper/css/swiper.min.css";
+
+
+@import 'styles/fonts.scss';
+@import 'styles/texttv-app-theme.scss';
+@import 'styles/view-modes.scss';
+
+.mat-menu-panel > .mat-menu-content:not(:empty) {
+    padding: 0;
+}

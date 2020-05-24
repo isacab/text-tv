@@ -75,7 +75,7 @@ public class WebAppInterface {
   @JavascriptInterface
   public void openSettings() {
     try {
-      Intent i = new Intent(mActivity, SettingsActivityOld.class);
+      Intent i = new Intent(mActivity, SettingsActivity.class);
       mActivity.startActivityForResult(i, SETTINGS_REQUEST_CODE);
     } catch (Exception e) {
       Log.d("openSettings", e.getMessage() + e.getStackTrace().toString());

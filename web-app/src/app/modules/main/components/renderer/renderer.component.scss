@@ -1,0 +1,28 @@
+@import '../../../../../styles/svttextstyle.scss';
+@import '../../../../../styles/custom-svttextstyle.scss';
+
+:host {
+    color: var(--texttv-text-color);
+}
+
+.html-content-wrapper {
+    background-color: var(--texttv-background-color);
+    height: 100%;
+    min-height: 380px;
+    overflow-y: auto;
+}
+
+canvas {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.virtual-scroll-viewport {
+    height: 100%;
+}
+
+.sub-page {
+    height: 382px; //573px;
+}
