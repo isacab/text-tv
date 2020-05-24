@@ -1,0 +1,17 @@
+{
+  "defaultProject": "text-tv",
+  "projects": {
+    "text-tv": {
+      "name": "text-tv",
+      "integrations": {},
+      "type": "angular",
+      "root": ""
+    },
+    "text-tv-android": {
+      "name": "text-tv",
+      "integrations": {},
+      "type": "angular",
+      "root": ""
+    }
+  }
+}

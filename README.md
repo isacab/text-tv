@@ -20,3 +20,15 @@ Run `buld-android.sh` under `cordova/TextTvSv` to build the android project.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Node
+
+v12.16.2
+
+## npm
+
+6.14.4
+
+## Solve common errors
+
+"Must use import to load ES Module" -> Remove "type": "module" 

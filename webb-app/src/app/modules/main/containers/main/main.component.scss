@@ -1,0 +1,106 @@
+:host {
+    background-color: var(--ion-background-color);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-root {
+
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+    .app-main {
+        flex: 1 1;
+    }
+
+    .app-footer {
+        flex: 0 0;
+    }
+
+    // .texttv-wrapper {
+    //     position: relative;
+    //     margin: 16px auto 0 auto; 
+    //     max-width: 665px; 
+    //     min-width: 665px;
+    //     width: 665px;
+    //     min-height: 1px;
+    // }
+        
+    .texttv-wrapper {
+        min-width: initial;
+        max-width: initial;
+        width: 100vw;
+        height: 100%;
+        //display: flex;
+        //flex: 1;
+        margin: 0 auto 0 auto;
+    }
+
+    .zoom-container {
+        height: 100%;
+    }
+
+    .swiper-container {
+        height: 100%;
+    }
+
+    .scroll-container {
+        height: 100%;
+        overflow-y: auto; 
+    }
+}
+
+.splash-overlay {
+    z-index: 99;
+    background-color: var(--ion-background-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+@media (max-width: 700px) {
+    .app-root {
+        
+        .texttv-wrapper {
+            min-width: initial;
+            max-width: initial;
+            width: 100vw;
+            //display: flex;
+            //flex: 1;
+            margin: 0 auto 0 auto;
+        }
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 450px) {
+    .app-root.landscape {
+
+        .app-main {
+            min-height: 100vh;
+            margin-bottom: 0;
+            margin-right: var(--footer-width-landscape);
+        }
+    
+        .app-footer {
+            bottom: 0;
+            left: initial;
+            right: 0;
+            top: 0;
+            width: var(--footer-width-landscape);
+            height: 100vh;
+        }
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 600px) {
+    .app-root.env-android.landscape .texttv-wrapper {
+        margin-top: 0;
+    }
+}
+ 

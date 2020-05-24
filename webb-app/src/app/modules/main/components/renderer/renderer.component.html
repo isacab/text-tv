@@ -1,0 +1,6 @@
+<div #wrapper class="html-content-wrapper" [ngClass]="themeClass" (click)="onClick($event)">
+    <cdk-virtual-scroll-viewport itemSize="382" class="virtual-scroll-viewport">
+        <div *cdkVirtualFor="let html of page?.htmlContent" [innerHTML]="html | safeHtml" [ngStyle]="style" class="sub-page"></div>
+    </cdk-virtual-scroll-viewport>
+    <!-- <div *ngFor="let html of page?.htmlContent" [innerHTML]="html | safeHtml" [ngStyle]="style"></div> -->
+</div> 

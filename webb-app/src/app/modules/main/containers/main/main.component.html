@@ -1,0 +1,56 @@
+<div class="app-root" [ngClass]="['app-root', orientationClass, fontClass, viewModeClass, backgroundRepeatClass]">
+  <div class="app-main" (window:resize)="windowSizeChanged()">
+    <div #textTvWrapper class="texttv-wrapper">
+        <div class="swiper-container" #swiperContainer>
+          <div class="swiper-wrapper">
+            <div *ngFor="let slide of virtualData.slides; index as i"
+              class="swiper-slide"
+              [attr.data-swiper-slide-index]="virtualData.from + i"
+              [ngStyle]="{ 'left': virtualData.offset + 'px' }">
+              <div class="scroll-container">
+                <div class="zoom-container" [ngStyle]="zoomContainerStyle">
+                  <app-renderer [page]="slide?.data" [theme]="renderTheme" (linkClick)="onLinkClick($event)"></app-renderer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="app-footer">
+    <app-menu-bar [page]="pageNumber" (pageChange)="pageChange($event)" (itemClick)="menuItemClick($event)"></app-menu-bar>
+  </div>
+</div>
+<div class="splash-overlay" *ngIf="!init"></div>
+
+<!-- <div #textTvWrapper class="texttv-wrapper">
+  <div class="zoom-container" [ngStyle]="zoomContainerStyle">
+    <div class="swiper-container" #swiperContainer>
+      <div class="swiper-wrapper">
+        <div *ngFor="let slide of virtualData.slides; index as i"
+          class="swiper-slide"
+          [attr.data-swiper-slide-index]="virtualData.from + i"
+          [ngStyle]="{ 'left': virtualData.offset + 'px' }">
+          <app-renderer [page]="slide?.textTvPage" [theme]="renderTheme" (linkClick)="onLinkClick($event)"></app-renderer>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div [ngClass]="['app-root', envClass, orientationClass, fontClass, viewModeClass, backgroundRepeatClass]" (window:resize)="windowSizeChanged()">
+  <div class="app-main">
+    <div #scrollWrapper class="renderer-wrapper">
+      <div #wrapper class="inner-renderer-wrapper">
+        <div class="zoom-container" [ngStyle]="style">
+          <app-renderer [htmlContent]="textTvPage?.htmlContent" [theme]="renderTheme" (linkClick)="onLinkClick($event)"></app-renderer>
+        </div>
+      </div>
+    </div> 
+    <app-loading-overlay *ngIf="showLoadingOverlay"></app-loading-overlay>
+  </div>
+  <div class="app-footer">
+    <app-menu-bar [page]="pageNumber" [direction]="menuDirection" (pageChange)="pageChange($event)" (itemClick)="menuItemClick($event)"></app-menu-bar>
+  </div>
+</div>
+<div class="splash-overlay" *ngIf="!init"></div> -->
