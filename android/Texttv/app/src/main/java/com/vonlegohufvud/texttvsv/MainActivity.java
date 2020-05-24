@@ -14,8 +14,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
-import com.vonlegohufvud.texttvsv.texttv.TextTvFragment;
-
 import java.util.Map;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -26,7 +24,9 @@ import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 public class MainActivity extends AppCompatActivity {
 
   AppStateService mAppState = ServiceLocator.getInstance().getAppStateService();
-  TextTvFragment mTextTvFragment;
+  CustomSwipeRefreshLayout mSwipeRefreshLayout;
+  WebView mWebView;
+  LinearLayout mOverlay;
   CompositeDisposable mSubscriptions = new CompositeDisposable();
 
   int resumeCount = 0;
@@ -36,13 +36,47 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    mTextTvFragment = (TextTvFragment) getSupportFragmentManager().findFragmentById(R.id.textTvFragment);
-    mTextTvFragment.setOnRefreshListener(new TextTvFragment.OnRefreshListener() {
+
+    mOverlay = findViewById(R.id.overlay);
+
+    mWebView = findViewById(R.id.web_view);
+    mWebView.getSettings().setJavaScriptEnabled(true);
+    mWebView.getSettings().setDomStorageEnabled(true);
+    mWebView.getSettings().setAppCacheEnabled(true);
+    mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+    mWebView.addJavascriptInterface(new WebAppInterface(this, mWebView), "Android");
+    mWebView.setWebViewClient(new WebViewClient() {
+      @Override
+      public void onPageFinished(WebView view, String url) {
+        // Log.d("TextTvPageFragment", "onPageFinished");
+        mOverlay.setVisibility(LinearLayout.GONE);
+      }
+    });
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      mWebView.setWebContentsDebuggingEnabled(true);
+    }
+    if (savedInstanceState == null) {
+      mWebView.loadUrl(BuildConfig.WEB_APP_URL);
+    }
+
+
+    mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+    //mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorAccent);
+    mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+    mSwipeRefreshLayout.setEnabled(false);
+    mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override
       public void onRefresh() {
         mAppState.setRefreshing(true);
       }
     });
+    mSwipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+      @Override
+      public boolean canChildScrollUp(@NonNull SwipeRefreshLayout parent, @Nullable View child) {
+        return mWebView.getScrollY() > 0;
+      }
+    });
+
     this.initSubscriptions();
     mAppState.setPreferences(getDefaultSharedPreferences(this).getAll());
   }
@@ -53,14 +87,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void accept(Map<String, ?> res) {
           boolean value = res.get("swipeRefresh") != null ? ((Boolean)res.get("swipeRefresh")).booleanValue() : true;
-          mTextTvFragment.setSwipeRefreshEnabled(value);
+          if(mSwipeRefreshLayout.isEnabled() != value) {
+            if (mSwipeRefreshLayout.isRefreshing()) {
+              mSwipeRefreshLayout.setRefreshing(false);
+            }
+            mSwipeRefreshLayout.setEnabled(value);
+          }
         }
       }),
       mAppState.getRefreshing().subscribe(new Consumer<Boolean>() {
         @Override
         public void accept(Boolean res) {
-          if (mTextTvFragment.isRefreshing() != res) {
-            mTextTvFragment.setRefreshing(res);
+          if (mSwipeRefreshLayout.isRefreshing() != res) {
+            mSwipeRefreshLayout.setRefreshing(res);
           }
         }
       })
@@ -85,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public void onBackPressed() {
-    if (mTextTvFragment.getWebView().canGoBack()) {
-      mTextTvFragment.getWebView().goBack();
+    if (mWebView.canGoBack()) {
+      mWebView.goBack();
     } else {
       super.onBackPressed();
     }
@@ -95,13 +134,13 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onSaveInstanceState(Bundle outState ) {
     super.onSaveInstanceState(outState);
-    mTextTvFragment.getWebView().saveState(outState);
+    mWebView.saveState(outState);
   }
 
   @Override
   protected void onRestoreInstanceState(Bundle savedInstanceState) {
     super.onRestoreInstanceState(savedInstanceState);
-    mTextTvFragment.getWebView().restoreState(savedInstanceState);
+    mWebView.restoreState(savedInstanceState);
   }
 
   @Override

@@ -1,16 +1,23 @@
 <resources>
   <string name="app_name">Text-tv</string>
-  <string name="title_activity_settings">Inställningar</string>
-  <string name="title_activity_settings_appearance">Utseende</string>
+  <string name="title_activity_settings">Settings</string>
 
   <!-- Preference Titles -->
-  <string name="appearance_header">Utseende</string>
+  <string name="messages_header">Messages</string>
+  <string name="sync_header">Sync</string>
 
+  <!-- Messages Preferences -->
+  <string name="signature_title">Your signature</string>
+  <string name="reply_title">Default reply action</string>
+
+  <!-- Sync Preferences -->
+  <string name="sync_title">Sync email periodically</string>
+  <string name="attachment_title">Download incoming attachments</string>
+  <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+  <string name="attachment_summary_off">Only download attachments when manually requested</string>
+  <string name="appearance_header">Utseende</string>
   <string name="user_insterface_header">Interaktion</string>
   <string name="data_usage_header">Dataanvändning</string>
   <string name="other_settings_header">Övriga inställningar</string>
-
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

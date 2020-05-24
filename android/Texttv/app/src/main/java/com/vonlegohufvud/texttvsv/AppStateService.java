@@ -1,15 +1,17 @@
 package com.vonlegohufvud.texttvsv;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
-
-import com.vonlegohufvud.texttvsv.shared.RunnableWithArg;
+import android.util.Log;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.AsyncSubject;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.ReplaySubject;
+import io.reactivex.subjects.Subject;
 
 public class AppStateService {
 

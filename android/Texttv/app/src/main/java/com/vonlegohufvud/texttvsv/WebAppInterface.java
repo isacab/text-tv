@@ -6,8 +6,6 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
-import com.vonlegohufvud.texttvsv.settings.SettingsActivity;
-
 import org.apache.commons.lang3.ClassUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;

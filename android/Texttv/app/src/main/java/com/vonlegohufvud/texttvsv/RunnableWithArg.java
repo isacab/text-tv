@@ -1,4 +1,4 @@
-package com.vonlegohufvud.texttvsv.shared;
+package com.vonlegohufvud.texttvsv;
 
 public abstract class RunnableWithArg implements Runnable {
 

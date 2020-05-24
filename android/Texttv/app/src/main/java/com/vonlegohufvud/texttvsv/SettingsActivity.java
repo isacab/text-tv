@@ -1,4 +1,4 @@
-package com.vonlegohufvud.texttvsv.settings;
+package com.vonlegohufvud.texttvsv;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,42 +12,28 @@ import static androidx.preference.PreferenceManager.*;
 
 import android.view.MenuItem;
 
-import com.vonlegohufvud.texttvsv.R;
-
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-  private Intent mResultIntent = new Intent();
+  private Intent resultIntent = new Intent();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(getLayoutId());
+    setContentView(R.layout.settings_activity);
     getSupportFragmentManager()
       .beginTransaction()
-      .replace(R.id.settings, getPreferenceFragment())
+      .replace(R.id.settings, new SettingsFragment())
       .commit();
 
-    initToolbar();
-
-    mResultIntent.putExtra("changed", false);
-    setResult(RESULT_CANCELED, mResultIntent);
-  }
-
-  protected int getLayoutId() {
-    return R.layout.settings_activity;
-  }
-
-  protected PreferenceFragmentCompat getPreferenceFragment() {
-    return new SettingsFragment();
-  }
-
-  protected void initToolbar() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.settingsToolbar);
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null){
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
+    resultIntent.putExtra("changed", false);
+    setResult(RESULT_CANCELED, resultIntent);
   }
 
   public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -71,9 +57,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-    if(!mResultIntent.getBooleanExtra("changed", false)) {
-      mResultIntent.putExtra("changed", true);
-      setResult(RESULT_OK, mResultIntent);
+    if(!resultIntent.getBooleanExtra("changed", false)) {
+      resultIntent.putExtra("changed", true);
+      setResult(RESULT_OK, resultIntent);
     }
   }
 
