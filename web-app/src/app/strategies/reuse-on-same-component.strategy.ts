@@ -6,6 +6,13 @@ export class ReuseOnSameComponentStrategy implements RouteReuseStrategy {
     shouldAttach(route: ActivatedRouteSnapshot): boolean { return false; }
     retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle|null { return null; }
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        return future.component && future.component === curr.component;
+        return this.getLastChild(future).component && this.getLastChild(future).component === this.getLastChild(curr).component;
+    }
+
+    private getLastChild(snapshot: ActivatedRouteSnapshot): ActivatedRouteSnapshot {
+        if (!snapshot.children || !snapshot.children.length) {
+            return snapshot;
+        }
+        return snapshot.children[snapshot.children.length - 1];
     }
 }

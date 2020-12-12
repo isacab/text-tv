@@ -21,7 +21,7 @@ export class PageNumberInputComponent implements OnInit {
   }
 
   change(value: number): void {
-    if (this.inputRef.nativeElement.value && this.inputRef.nativeElement.value.length > 3) {
+    if (this.inputRef.nativeElement.value?.length > 3) {
       value = parseInt(value.toString().substr(0, 3), 10);
       //this.inputRef.nativeElement.value = this.inputRef.nativeElement.value.substr(0, 3);
       this.page = value;
@@ -30,10 +30,19 @@ export class PageNumberInputComponent implements OnInit {
     }
   }
 
-  onKeyDown(event: KeyboardEvent ) {
-    const key = event.key.toLowerCase();
-    if(['e', '.', ',', '+', '-'].includes(key)) {
+  onKeyDown(event: KeyboardEvent) {
+    const key: any = event.key.toLowerCase();
+    if((isFinite(key) && this.inputRef.nativeElement.value?.length >= 3) || ['e', '.', ',', '+', '-'].includes(key)) {
       event.preventDefault();
+    }
+  }
+
+  onPaste(event: ClipboardEvent) {
+    let text = event.clipboardData?.getData("text")
+    if(text) {
+      event.preventDefault();
+      text = text.replace(/\D/g,'').substr(0, 3-this.inputRef.nativeElement.value?.length);
+      document.execCommand('insertText', false, text);
     }
   }
 

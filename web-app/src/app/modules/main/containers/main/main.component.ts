@@ -40,6 +40,7 @@ export class MainComponent implements OnInit, OnDestroy {
   renderTheme: string = 'double-height-titles';
 
   fontConfig = {
+    'Consolas': { class: null, contentWidth: 340, contentHeight: 392, letterWidth: 9 }, 
     'Inconsolata': { class: 'font_inconsolata', contentWidth: 320, contentHeight: 388, letterWidth: 8 },
     'Fira Mono': { class: 'font_fira_mono', contentWidth: 376, contentHeight: 432, letterWidth: 9 },
     'Roboto Mono': { class: 'font_roboto_mono', contentWidth: 376, contentHeight: 432, letterWidth: 9 },
@@ -112,8 +113,13 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   get currentFontConfig(): any {
-    const font = this.preferences && this.preferences.font;
-    return this.fontConfig[font] || this.fontConfig['Inconsolata'];
+    let font = this.preferences?.font;
+    if(this.fontConfig[font])
+      return this.fontConfig[font];
+    else if(this.envClass === 'env-web' && this.isDesktop())
+      return this.fontConfig['Consolas'];
+    else
+      return this.fontConfig['Inconsolata'];
   }
 
   get totalMargin(): number {
@@ -129,11 +135,11 @@ export class MainComponent implements OnInit, OnDestroy {
     // check is currently fetching page
     if (this._textTvPageSubscription && !this._textTvPageSubscription.closed) {
       if (this._lastFetchedPageNumber === page) {
-        return; // is already fetching page
+        return; // is already fetching page 
       } else {
         this._textTvPageSubscription.unsubscribe(); // if new page then cancel current fetch
       }
-    }
+    } 
 
     this._lastFetchedPageNumber = page;
     this.pageNumber = page;

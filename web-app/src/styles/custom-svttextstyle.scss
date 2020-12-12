@@ -1,21 +1,19 @@
 @import './variables.scss';
 
+/*#region Common styles for all Themes */
 pre.root {
     background-color: $dark-background-color;
-    line-height: initial;
     margin: 0 auto 0 -8px;
     width: auto;
-    letter-spacing: 1.2px;
-    font-family: "Inconsolata", monospace;
     user-select: text;
     overflow: hidden; 
     padding: 1em 0 0 0;
     border-bottom: 1em solid $dark-background-color;
-    filter: initial;
-
-    span.B, span.bgB {
-        filter: hue-rotate(-38deg) brightness(1.3);
-    }
+    
+    //filter: initial;
+    // span.B, span.bgB {
+    //     filter: hue-rotate(-38deg) brightness(1.3);
+    // }
 }
 span.W,span.B,span.Y,span.BK,span.G,span.C,span.R {
     position: relative;
@@ -24,13 +22,10 @@ span.W,span.B,span.Y,span.BK,span.G,span.C,span.R {
 pre.root span {
     /*background-repeat: no-repeat !important;*/
     image-rendering: pixelated !important;
+    background-size: 100% 100% !important;
 }
 pre.root a:active {
     background-color: #92bfeb6b;
-}
-.DH {
-    line-height: initial;
-    letter-spacing: -1.8px;
 }
 
 .error-message {
@@ -42,12 +37,27 @@ pre.root a:active {
         padding-top: 2px;
     }
 }
+/* #endregion Common styles for all Themes */
 
+/* #region Additional settings */
 .background-no-repeat pre.root span {
     background-repeat: no-repeat !important;
 }
+/* #endregion Additional settings */
 
-/* Theme double height titles */
+/* #region Default SVT Theme */
+pre.root {
+    font-family: "Consolas", "Inconsolata", monospace;
+    line-height: initial;
+    letter-spacing: 1.2px;
+}
+.DH {
+    line-height: initial;
+    letter-spacing: -1.8px;
+}
+/* #endregion Default SVT Theme */
+
+/* #region Theme double height titles */
 .double-height-titles pre.root {
     line-height: 15.2px;
     letter-spacing: 0.5px;
@@ -61,7 +71,6 @@ pre.root a:active {
     display: inline-block;
     font-size: inherit;
     letter-spacing: 0.5px;
-    //border-bottom: 1em solid $dark-background-color;
     height: 30.4px;
 }
 .double-height-titles pre.root .DH > .SC {
@@ -71,27 +80,38 @@ pre.root a:active {
     font-size: inherit;
     letter-spacing: 0.5px;
 }
+/* #endregion Theme double height titles */
 
-/* Theme normal size titles */
+/* #region Theme normal size titles */
 .normal-size-titles pre.root .DH,
 .normal-size-titles pre.root .DH > .SC {
     font-size: inherit;
     letter-spacing: inherit;
 }
+/* #endregion Theme normal size titles */
 
-/* Font specific styling */
-div.font_inconsolata {
-    pre.root {
-        font-family: "Inconsolata", monospace;
-    }
-} 
+/* #region Font specific styling */
+div.font_droid_sans_mono pre.root {
+    font-family: "Droid Sans Mono", monospace;
+}
+div.font_vt323 pre.root {
+    font-family: "Inconsolata", monospace;
+}
+div.font_fira_mono pre.root {
+    font-family: "Fira Mono", monospace;
+}
+div.font_roboto_mono pre.root {
+    font-family: "Roboto Mono", monospace;
+}
+div.font_vt323 pre.root {
+    font-family: "VT323", monospace;
+}
 
 div.font_droid_sans_mono,
 div.font_fira_mono,
 div.font_roboto_mono,
 div.font_vt323 {
     pre.root {
-        font-family: "Droid Sans Mono", monospace;
         line-height: 17px;
         letter-spacing: 0.5px;
         margin-left: -9px;
@@ -114,29 +134,12 @@ div.font_vt323 {
     }
     .normal-size-titles pre.root .DH,
     .normal-size-titles pre.root .DH > .SC {
-        letter-spacing: 0.5px;
+        letter-spacing: inherit;
     }
-}
-
-div.font_droid_sans_mono pre.root {
-    font-family: "Droid Sans Mono", monospace;
-}
-
-div.font_fira_mono pre.root {
-    font-family: "Fira Mono", monospace;
-}
-
-div.font_roboto_mono pre.root {
-    font-family: "Roboto Mono", monospace;
-}
-
-div.font_vt323 pre.root {
-    font-family: "VT323", monospace;
 }
 
 div.font_vt323 {
     pre.root {
-        font-family: "VT323", monospace;
         font-size: 18px;
         line-height: 17px;
         letter-spacing: 1.8px;
@@ -154,3 +157,4 @@ div.font_vt323 {
         letter-spacing: 1.8px;
     }
 }
+/* #endregion Font specific styling */

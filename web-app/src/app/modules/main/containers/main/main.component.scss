@@ -1,0 +1,113 @@
+@import '../../../../../styles/variables.scss';
+
+.app-root {
+    background-color: #fff;
+    display: block;
+
+    .app-main {
+        user-select: text;
+        min-height: calc(100vh - #{$footer-height-lg});
+        padding-bottom: $footer-height-lg;
+    }
+    
+    .app-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: $footer-height-lg;
+    }
+
+    .renderer-wrapper {
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex: 1;
+        display: flex;
+    }
+
+    .inner-renderer-wrapper {
+        background-color: $dark-background-color;
+        position: relative;
+        margin: 16px auto 0 auto;
+        max-width: 665px;
+        width: 100%;
+    }
+    
+    app-loading-overlay {
+        position: fixed;
+        height: calc(100vh - #{$footer-height-lg});
+    }
+}
+
+.app-root.env-android {
+    background-color: $dark-background-color;
+    min-height: 100vh;
+    .inner-renderer-wrapper {
+        max-width: initial;
+    }
+}
+
+.splash-overlay {
+    z-index: 99;
+    background-color: $dark-background-color;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+@media (max-width: 700px) {
+    .app-root {
+        background-color: $dark-background-color;
+        min-height: 100vh;
+
+        .app-main {
+            min-height: calc(100vh - #{$footer-height-sm});
+            padding-bottom: $footer-height-sm;
+        }
+
+        .inner-renderer-wrapper {
+            max-width: initial;
+        }
+
+        .app-footer {
+            height: $footer-height-sm;
+        }
+    
+        app-loading-overlay {
+            height: calc(100vh - #{$footer-height-sm});
+        }
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 450px) {
+    .app-root.env-android.landscape {
+
+        .app-main {
+            min-height: 100vh;
+            padding-bottom: 0;
+            padding-right: $footer-width-landscape;
+        }
+    
+        .app-footer {
+            bottom: 0;
+            left: initial;
+            right: 0;
+            top: 0;
+            width: $footer-width-landscape;
+            height: 100vh;
+        }
+        
+        app-loading-overlay {
+            height: 100vh;
+            margin-right: $footer-width-landscape;
+        }
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 600px) {
+    .app-root.env-android.landscape .inner-renderer-wrapper {
+        margin-top: 0;
+    }
+}

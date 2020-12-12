@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MainComponent } from './containers/main/main.component';
@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 
+@Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any> {
       "pan": { enable: true, direction: Direction.ALL },
