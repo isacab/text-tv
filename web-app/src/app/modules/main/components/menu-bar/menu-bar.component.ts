@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { HotKeysService } from 'src/app/services/hot-keys.service';
 import { PageNumberInputComponent } from '../page-number-input/page-number-input.component';
-import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 @Component({
   selector: 'app-menu-bar',
@@ -21,16 +21,14 @@ export class MenuBarComponent implements OnInit {
   @ViewChild(PageNumberInputComponent, { static: true }) pageNumberInputRef: PageNumberInputComponent;
 
   constructor(
-    private hotKeysService: HotkeysService
+    private hotKeysService: HotKeysService
   ) { }
 
   ngOnInit() {
-    this.hotKeysService.add([
-      new Hotkey('left', () => { this.prev(); return true; } ),
-      new Hotkey('right', () => { this.next(); return true; } ),
-      new Hotkey('r', () => { this.refresh(); return true; } ),
-      new Hotkey(['p'/*, '1', '2', '3', '4', '5', '6', '7', '8', '9'*/], () => { this.pageNumberInputRef.focus(); return true; },  )
-    ]);
+    this.hotKeysService.add('left', () => { this.prev(); return true; } );
+    this.hotKeysService.add('right', () => { this.next(); return true; } ),
+    this.hotKeysService.add('r', () => { this.refresh(); return true; } ),
+    this.hotKeysService.add('p'/*, '1', '2', '3', '4', '5', '6', '7', '8', '9'*/, () => { this.pageNumberInputRef.focus(); return true; } );
   }
 
   next() {
