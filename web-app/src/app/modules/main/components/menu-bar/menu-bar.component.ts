@@ -25,8 +25,8 @@ export class MenuBarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.hotKeysService.add('left', () => { this.prev(); return true; } );
-    this.hotKeysService.add('right', () => { this.next(); return true; } ),
+    this.hotKeysService.add('ArrowLeft', () => { this.prev(); return true; } );
+    this.hotKeysService.add('ArrowRight', () => { this.next(); return true; } ),
     this.hotKeysService.add('r', () => { this.refresh(); return true; } ),
     this.hotKeysService.add('p'/*, '1', '2', '3', '4', '5', '6', '7', '8', '9'*/, () => { this.pageNumberInputRef.focus(); return true; } );
   }

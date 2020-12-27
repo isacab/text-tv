@@ -8,7 +8,6 @@ import { PageNumberInputComponent } from './components/page-number-input/page-nu
 import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 import { TextTvService } from 'src/app/services/text-tv.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { HotkeyModule } from 'angular2-hotkeys';
 import { SwipeContainerComponent, Direction } from './components/swipe-container/swipe-container.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,7 +39,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     CommonModule,
     AppRoutingModule,
     FormsModule,
-    HotkeyModule.forRoot(),
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
