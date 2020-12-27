@@ -46,11 +46,11 @@ export class RendererComponent implements OnInit, OnChanges {
         this.linkClick.emit(target.href);
       }
     } else {
-      this.ClearSelection();
+      //this.ClearSelection();
     }
   }
 
-  ClearSelection() {
+  /*ClearSelection() {
     if (window.getSelection) {
       if (window.getSelection().empty) {  // Chrome
         window.getSelection().empty();
@@ -58,6 +58,6 @@ export class RendererComponent implements OnInit, OnChanges {
         window.getSelection().removeAllRanges();
       }
     }
-  }
+  }*/
 
 }

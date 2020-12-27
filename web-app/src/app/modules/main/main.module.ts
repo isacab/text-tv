@@ -6,14 +6,13 @@ import { RendererComponent } from './components/renderer/renderer.component';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { PageNumberInputComponent } from './components/page-number-input/page-number-input.component';
 import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
-import { TextTvService } from 'src/app/services/text-tv.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { SwipeContainerComponent, Direction } from './components/swipe-container/swipe-container.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
+import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 
 @Injectable()
@@ -42,9 +41,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    HammerModule,
   ],
   providers: [
-    TextTvService,
     { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
   ],
 })
