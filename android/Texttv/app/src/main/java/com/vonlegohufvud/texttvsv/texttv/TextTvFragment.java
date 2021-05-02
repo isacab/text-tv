@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -61,7 +62,7 @@ public class TextTvFragment extends Fragment {
 
     mSwipeRefreshLayout = v.findViewById(R.id.swipe_refresh_layout);
     //mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorAccent);
-    mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+    mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
     mSwipeRefreshLayout.setEnabled(false);
     if(mRefreshListener != null) {
       mSwipeRefreshLayout.setOnRefreshListener(mRefreshListener);

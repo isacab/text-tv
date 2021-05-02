@@ -1,14 +1,14 @@
-<div [ngClass]="['app-root', envClass, orientationClass, fontClass, viewModeClass, preferences?.backgroundNoRepeat ? 'background-no-repeat' : 'background-repeat']" (window:resize)="windowSizeChanged()">
+<div [ngClass]="['app-root', envClass, orientationClass, currentFontConfig.class, viewModeClass]" (window:resize)="windowSizeChanged()">
   <div class="app-main">
-    <div #scrollWrapper class="renderer-wrapper">
-      <div #wrapper class="inner-renderer-wrapper">
-        <div class="zoom-container" [ngStyle]="style">
-          <app-swipe-container (pageChange)="swipe($event)" [disabled]="swipeDisabled" [animationDisabled]="swipeAnimationDisabled">
-            <app-renderer [htmlContent]="textTvPage?.htmlContent" [theme]="renderTheme" (linkClick)="onLinkClick($event)"></app-renderer>
-          </app-swipe-container>
+    <app-swipe-container (pageChange)="swipe($event)" [disabled]="swipeDisabled" [animationDisabled]="swipeAnimationDisabled">
+      <div #scrollWrapper class="renderer-wrapper">
+        <div #wrapper class="inner-renderer-wrapper double-height-titles">
+          <div class="zoom-container" [ngStyle]="style">
+            <app-renderer [pages]="textTvPage?.subPages" [theme]="renderTheme" (linkClick)="onLinkClick($event)"></app-renderer>
+          </div>
         </div>
-      </div>
-    </div> 
+      </div> 
+    </app-swipe-container>
     <app-loading-overlay *ngIf="showLoadingOverlay"></app-loading-overlay>
   </div>
   <div class="app-footer">

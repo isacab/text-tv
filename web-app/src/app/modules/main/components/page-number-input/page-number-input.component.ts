@@ -22,8 +22,8 @@ export class PageNumberInputComponent implements OnInit {
 
   change(value: number): void {
     if (this.inputRef.nativeElement.value?.length > 3) {
-      value = parseInt(value.toString().substr(0, 3), 10);
-      //this.inputRef.nativeElement.value = this.inputRef.nativeElement.value.substr(0, 3);
+      this.inputRef.nativeElement.value = this.inputRef.nativeElement.value.substr(0, 3).replace(/\./g, '');
+      value = parseInt(this.inputRef.nativeElement.value.toString(), 10);
       this.page = value;
     } else {
       this.pageChange.emit(value);
@@ -31,7 +31,7 @@ export class PageNumberInputComponent implements OnInit {
   }
 
   onKeyDown(event: KeyboardEvent) {
-    const key: any = event.key.toLowerCase();
+    const key: any = event.key?.toLowerCase();
     if((isFinite(key) && this.inputRef.nativeElement.value?.length >= 3) || ['e', '.', ',', '+', '-'].includes(key)) {
       event.preventDefault();
     }

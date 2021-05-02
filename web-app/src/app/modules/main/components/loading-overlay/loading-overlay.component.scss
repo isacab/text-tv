@@ -1,6 +1,13 @@
+$dia: 56px;
+$radius: 28px;
+$strokeWidth: 8px;
+$strokeWidthX2: 16px;
+
 :host {
-    width: 100%;
-    height: 100%;
+    // width: 100%;
+    // height: 100%; 
+    top: calc(50vh - 36px - 64px);
+    left: calc(50vw - 36px);
 }
 
 .overlay {
@@ -8,16 +15,26 @@
   height: 100%;
 }
 
-.spinner-background {
+.spinner-container {
   z-index: 2;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -36px 0 0 -36px;
-  height: 72px;
-  width: 72px;
-  /*border-radius: 36px;*/
+  top: calc(50vh - #{$radius} - 64px);
+  left: calc(50vw - #{$radius});
+}
+
+.spinner-background {
+  z-index: 4;
+  top: calc(50vh - #{$radius} - 64px);
+  left: calc(50vw - #{$radius});
+  height: calc(#{$dia} - #{$strokeWidthX2});
+  width: calc(#{$dia} - #{$strokeWidthX2});
   background: transparent;
+  overflow: hidden;
+  border-color: rgb(72 72 72 / 50%);
+  border-radius: 50%;
+  border-style: solid;
+  border-width: $strokeWidth;
+  //margin: #{$strokeWidthX2} 0 0 #{$strokeWidthX2};
 }
 
 mat-spinner {
@@ -25,66 +42,5 @@ mat-spinner {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -25px 0 0 -25px;
+  margin: -#{$radius} 0 0 -#{$radius};
 }
-
-// .overlay {
-//     width: 100%;
-//     height: 100%;
-//     animation: fadein 0.2s;
-//     -moz-animation: fadein 0.2s; /* Firefox */
-//     -webkit-animation: fadein 0.2s; /* Safari and Chrome */
-//     -o-animation: fadein 0.2s; /* Opera */
-//     animation-fill-mode: forwards;
-// }
-
-// @keyframes fadein {
-//     0% {
-//         opacity: 0;
-//     }
-//     99% {
-//         opacity: 0;
-//     }
-//     100% {
-//         opacity: 1;
-//     }
-//   }
-
-// .spinner {
-//     animation: rotate 2s linear infinite;
-//     z-index: 2;
-//     position: absolute;
-//     top: 50%;
-//     left: 50%;
-//     margin: -25px 0 0 -25px;
-//     width: 50px;
-//     height: 50px;
-    
-//     & .path {
-//       stroke: hsl(210, 70, 75);
-//       stroke-linecap: round;
-//       animation: dash 1.5s ease-in-out infinite;
-//     }
-    
-//   }
-  
-// @keyframes rotate {
-//   100% {
-//     transform: rotate(360deg);
-//   }
-// }
-
-// @keyframes dash {
-//   0% {
-//     stroke-dasharray: 1, 150;
-//     stroke-dashoffset: 0;
-//   }
-//   50% {
-//     stroke-dasharray: 90, 150;
-//     stroke-dashoffset: -35;
-//   }
-//   100% {
-//     stroke-dasharray: 90, 150;
-//     stroke-dashoffset: -124;
-//   }
-// }

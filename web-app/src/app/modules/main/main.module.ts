@@ -11,7 +11,7 @@ import { SwipeContainerComponent, Direction } from './components/swipe-container
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 
@@ -42,6 +42,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatIconModule,
     MatProgressSpinnerModule,
     HammerModule,
+    ScrollingModule
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },

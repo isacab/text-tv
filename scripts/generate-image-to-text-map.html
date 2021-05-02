@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Genereate Imge to Text Map</title>
+        <script src="generate-image-to-text-map.js"></script>
+    </head>
+    <body>
+        <style>
+            body {
+                margin: 16px;
+            }
+            pre {
+                background: #f0f0f0;
+                border: 1px solid #ccc;
+                border-radius: 16px;
+                padding: 32px;
+            }
+            .row {
+                overflow: hidden;
+                width: 100%;
+                display: flex;
+            }
+
+            table {
+                border-spacing: 1px;
+                background-color: #777;
+            }
+            td {
+                width: 4px;
+                height: 4px;
+                overflow: visible;
+                position: relative;
+            }
+            .tooltip {
+                visibility: hidden;
+                background-color: rgba(0, 0, 0, 0.72);
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                top: 8px;
+                left: 8px;
+            }
+            td:hover .tooltip {
+                visibility: visible;
+            }
+            .imageListContainer {
+                padding: 16px;
+            }
+            .imageListRow {
+                margin: 2px;
+                display: inline-block;
+            }
+            .cellBgColor {
+                background-color: #0FF;
+            }
+            .cellFontColor {
+                background-color: #00F;
+            }
+        </style>
+        <div>
+            <canvas></canvas>
+        </div>
+        <div class="row">
+            <div class="col">
+                <pre id="mapResult"></pre>
+                <pre id="missing"></pre>
+            </div>
+            <div class="col">
+                <div id="imageResult"></div>
+            </div>
+        </div>
+    </body>
+</html>

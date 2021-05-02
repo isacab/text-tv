@@ -1,7 +1,7 @@
 @import '../../../../../styles/variables.scss';
 
 .app-root {
-    background-color: #fff;
+    background-color: #000;//#fff;
     display: block;
 
     .app-main {
@@ -23,12 +23,14 @@
         overflow-x: hidden;
         flex: 1;
         display: flex;
+        min-height: calc(100vh - #{$footer-height-lg})
     }
 
     .inner-renderer-wrapper {
         background-color: $dark-background-color;
         position: relative;
         margin: 16px auto 0 auto;
+        //padding-right: 2.5%;
         max-width: 665px;
         width: 100%;
     }
@@ -36,6 +38,8 @@
     app-loading-overlay {
         position: fixed;
         height: calc(100vh - #{$footer-height-lg});
+        top: 0;
+        left: 0;
     }
 }
 
@@ -102,6 +106,8 @@
         app-loading-overlay {
             height: 100vh;
             margin-right: $footer-width-landscape;
+            top: 0;
+            left: 0;
         }
     }
 }

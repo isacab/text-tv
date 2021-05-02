@@ -55,7 +55,8 @@
                 "src/styles"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "serviceWorker": true
           },
           "configurations": {
             "production": {

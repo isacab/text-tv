@@ -9,20 +9,22 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.AsyncSubject;
+import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.ReplaySubject;
 
 public class AppStateService {
 
-  private ReplaySubject<Integer> mPageSubject = ReplaySubject.createWithSize(1);
+  //private ReplaySubject<Integer> mPageSubject = ReplaySubject.createWithSize(1);
   private ReplaySubject<Boolean> mRefreshingSubject = ReplaySubject.createWithSize(1);
   private ReplaySubject<Map<String, ?>> mPreferencesSubject = ReplaySubject.createWithSize(1);
-  private AsyncSubject<Integer> mResumeSubject = AsyncSubject.create();
-  private AsyncSubject<Integer> mPauseSubject = AsyncSubject.create();
+  private PublishSubject<Integer> mResumeSubject = PublishSubject.create();
+  private PublishSubject<Integer> mFocusSubject = PublishSubject.create();
+  private PublishSubject<Integer> mPauseSubject = PublishSubject.create();
 
   public AppStateService() {
   }
 
-  public Observable<Integer> getPage() {
+  /*public Observable<Integer> getPage() {
     return mPageSubject.hide();
   }
 
@@ -40,7 +42,7 @@ public class AppStateService {
         }
       });
     }
-  }
+  }*/
 
   public Observable<Boolean> getRefreshing() {
     return mRefreshingSubject.hide();
@@ -88,6 +90,14 @@ public class AppStateService {
 
   public void triggerResume(Integer count) {
     this.mResumeSubject.onNext(count);
+  }
+
+  public Observable onFocus() {
+    return mFocusSubject.hide();
+  }
+
+  public void triggerFocus(Integer count) {
+    this.mFocusSubject.onNext(count);
   }
 
   public Observable onPause() {

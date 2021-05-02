@@ -1,3 +1,7 @@
 <div #wrapper class="html-content-wrapper" [ngClass]="themeClass" (click)="onClick($event)">
-    <div [ngStyle]="style" [innerHTML]="htmlContent | safeHtml"></div>
+    <main>
+        <!--<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport" itemSize="457">-->
+            <div *ngFor="let p of pages; trackBy: trackByFn; let i = index" [id]="'subPage'+p.subPageNumber" [innerHTML]="p.htmlContent | safeHtml"></div>
+        <!-- </cdk-virtual-scroll-viewport> -->
+    </main>
 </div>

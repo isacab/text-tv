@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { SubPage, TextTvPage } from 'src/app/models/text-tv-page';
 
 @Component({
   selector: 'app-renderer',
@@ -8,14 +9,12 @@ import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output, Elem
 })
 export class RendererComponent implements OnInit, OnChanges {
 
-  @Input() htmlContent: string;
+  @Input() pages: SubPage[];
   @Input() theme: 'default' | 'double-height-titles' | 'normal-size-titles';
 
   @ViewChild('wrapper', { static: true }) wrapperRef: ElementRef;
 
   @Output() linkClick = new EventEmitter<string>();
-
-  style: any;
   themeClass: string;
 
   constructor() { }
@@ -40,6 +39,7 @@ export class RendererComponent implements OnInit, OnChanges {
     const target = event.target as HTMLAnchorElement;
     if (target.tagName.toLowerCase() === 'a') {
       event.stopPropagation();
+      target.classList.add('clicked');
       const navigateWithinSameTab = !event.ctrlKey && (!target.target || target.target.toLowerCase() === '_self');
       if (/*UrlUtils.isSameOrigin(target.href) && */ navigateWithinSameTab) {
         event.preventDefault();
@@ -48,6 +48,10 @@ export class RendererComponent implements OnInit, OnChanges {
     } else {
       //this.ClearSelection();
     }
+  }
+
+  trackByFn(index, item) {
+    return item.subPageNumber;
   }
 
   /*ClearSelection() {

@@ -20,19 +20,9 @@
       android:configChanges="orientation|screenSize">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity
-      android:name=".settings.SettingsActivityNested"
-      android:label="@string/title_activity_settings"></activity>
-    <activity
-      android:name=".settings.SettingsActivity"
-      android:label="@string/title_activity_settings" />
-    <activity
-      android:name=".settings.SettingsAppearanceActivity"
-      android:label="@string/title_activity_settings_appearance"></activity>
   </application>
 
 </manifest>

@@ -71,6 +71,7 @@ export class SwipeContainerComponent implements OnInit {
     const threshold = this.width*this.swipeThreshold;
     if(this.isActive && distance > threshold) {
       const direction = event.deltaX > 0 ? Direction.RIGHT : Direction.LEFT;
+      // console.log('panend');
       this.pageChange.emit(direction);
     }
     this.isActive = false;
@@ -87,6 +88,7 @@ export class SwipeContainerComponent implements OnInit {
   onSwipe(event: any): void {
     this.isActive = false;
     if(event.direction & Direction.HORIZONTAL) {
+      // console.log('swipe');
       event.preventDefault();
       this.pageChange.emit(event.direction);
     }

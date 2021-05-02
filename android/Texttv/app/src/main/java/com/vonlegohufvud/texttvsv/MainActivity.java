@@ -1,25 +1,10 @@
 package com.vonlegohufvud.texttvsv;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-
-import com.vonlegohufvud.texttvsv.texttv.TextTvFragment;
-
 import java.util.Map;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import com.vonlegohufvud.texttvsv.texttv.TextTvFragment;
 
 import static androidx.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -30,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
   CompositeDisposable mSubscriptions = new CompositeDisposable();
 
   int resumeCount = 0;
+  int focusCount = 0;
   int pauseCount = 0;
 
   @Override
@@ -77,6 +63,15 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
+  public void onWindowFocusChanged(boolean hasFocus) {
+    super.onWindowFocusChanged(hasFocus);
+    if(hasFocus && this.focusCount > 0) {
+      this.mAppState.triggerFocus(this.focusCount);
+    }
+    this.focusCount++;
+  }
+
+  @Override
   protected void onPause() {
     super.onPause();
     this.pauseCount++;
@@ -104,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     mTextTvFragment.getWebView().restoreState(savedInstanceState);
   }
 
-  @Override
+  /*@Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
@@ -112,5 +107,5 @@ public class MainActivity extends AppCompatActivity {
       boolean changed = data.getBooleanExtra("changed", false);
       mAppState.setPreferences(getDefaultSharedPreferences(this).getAll());
     }
-  }
+  }*/
 }

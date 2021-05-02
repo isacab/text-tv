@@ -13,6 +13,7 @@ export class AndroidInterfaceService {
   private refreshingSubject = new BehaviorSubject<boolean>(false);
   private preferencesSubject = new ReplaySubject<any>(1);
   private resumeSubject = new Subject<void>();
+  private focusSubject = new Subject<void>();
   private pauseSubject = new Subject<void>();
 
   constructor() {
@@ -21,7 +22,7 @@ export class AndroidInterfaceService {
     }
     if (window.Android) {
       window.Android.receiveMessage = (message: string, details: any) => {
-        console.log('window.Android.receiveMessage', message, details);
+        // console.log('window.Android.receiveMessage', message, details);
         switch(message) {
           case 'page_changed':
             this.pageSubject.next(details);
@@ -34,6 +35,8 @@ export class AndroidInterfaceService {
             this.preferencesSubject.next(details);
           case 'resumed':
             this.resumeSubject.next();
+          case 'focused':
+            this.focusSubject.next();
           case 'paused':
             this.pauseSubject.next();
         }
@@ -58,7 +61,7 @@ export class AndroidInterfaceService {
   }
   setRefreshing(value: boolean): void {
     if(window.Android && this.refreshingSubject.getValue() != value) {
-      console.log('setRefreshing', value);
+      // console.log('setRefreshing', value);
       window.Android.setRefreshing(value);
     }
   }
@@ -69,18 +72,20 @@ export class AndroidInterfaceService {
 
   openSettings(): void {
     if (window.Android) {
-      console.log('openSettings');
+      // console.log('openSettings');
       window.Android.openSettings();
     }
   }
 
   get onResume(): Observable<void> {
-    console.log('onResume');
     return this.resumeSubject.asObservable();
   }
 
+  get onFocus(): Observable<void> {
+    return this.focusSubject.asObservable();
+  }
+
   get onPause(): Observable<void> {
-    console.log('onPause');
     return this.pauseSubject.asObservable();
   }
 }
@@ -88,20 +93,18 @@ export class AndroidInterfaceService {
 class MockAndroidInterface {
 
   private callback: string;
-  private resumeCounter = 0;
+  private focusCounter = 0;
   private preferences = {
     // font: 'Fira Mono',
-    font: 'Droid Sans Mono',
-    // font: 'Inconsolata',
+    // font: 'Droid Sans Mono',
+     font: 'Inconsolata',
     // font: 'Roboto Mono',
-    // font: 'VT323',
     zoomLevel: 1,
-    headerSize: 'x2',
   };
 
   constructor() {
     window.addEventListener('focus', (event) => {
-      this.runCallback('resumed', ++this.resumeCounter);
+      this.runCallback('focused', ++this.focusCounter);
     });
   }
 

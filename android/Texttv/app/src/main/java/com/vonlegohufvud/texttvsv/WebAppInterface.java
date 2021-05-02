@@ -6,8 +6,6 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
-import com.vonlegohufvud.texttvsv.settings.SettingsActivity;
-
 import org.apache.commons.lang3.ClassUtils;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -31,7 +29,7 @@ public class WebAppInterface {
 
   CompositeDisposable mSubscriptions;
 
-  public static final int SETTINGS_REQUEST_CODE = 1;
+  //public static final int SETTINGS_REQUEST_CODE = 1;
 
   public WebAppInterface(Activity activity, WebView webView) {
     mActivity = activity;
@@ -48,7 +46,7 @@ public class WebAppInterface {
     mMessageCallbacks.add(callback);
   }
 
-  @JavascriptInterface
+  /*@JavascriptInterface
   public void setPage(String value) {
     try {
       int page = Integer.parseInt(value);
@@ -56,7 +54,7 @@ public class WebAppInterface {
     } catch (NumberFormatException e) {
       Log.d("setPage", e.getMessage() + e.getStackTrace().toString());
     }
-  }
+  }*/
 
   @JavascriptInterface
   public void setRefreshing(String value) {
@@ -74,7 +72,7 @@ public class WebAppInterface {
     runCallbacks(mMessageCallbacks, "preferences_get", preferences);
   }
 
-  @JavascriptInterface
+  /*@JavascriptInterface
   public void openSettings() {
     try {
       Intent i = new Intent(mActivity, SettingsActivity.class);
@@ -82,17 +80,17 @@ public class WebAppInterface {
     } catch (Exception e) {
       Log.d("openSettings", e.getMessage() + e.getStackTrace().toString());
     }
-  }
+  }*/
 
   protected void initSubscriptions() {
     mSubscriptions = new CompositeDisposable();
     mSubscriptions.addAll(
-      mAppState.getPage().subscribe(new Consumer<Integer>() {
+      /*mAppState.getPage().subscribe(new Consumer<Integer>() {
         @Override
         public void accept(Integer res) {
           runCallbacks(mMessageCallbacks, "page_changed", res);
         }
-      }),
+      }),*/
       mAppState.getRefreshing().subscribe(new Consumer<Boolean>() {
         @Override
         public void accept(Boolean res) {
@@ -105,15 +103,21 @@ public class WebAppInterface {
           runCallbacks(mMessageCallbacks, "preferences_changed", res);
         }
       }),
-      mAppState.onResume().subscribe(new Consumer<Boolean>() {
+      mAppState.onResume().subscribe(new Consumer<Integer>() {
         @Override
-        public void accept(Boolean res) {
+        public void accept(Integer res) {
           runCallbacks(mMessageCallbacks, "resumed", res);
         }
       }),
-      mAppState.onPause().subscribe(new Consumer<Boolean>() {
+      mAppState.onFocus().subscribe(new Consumer<Integer>() {
         @Override
-        public void accept(Boolean res) {
+        public void accept(Integer res) {
+          runCallbacks(mMessageCallbacks, "focused", res);
+        }
+      }),
+      mAppState.onPause().subscribe(new Consumer<Integer>() {
+        @Override
+        public void accept(Integer res) {
           runCallbacks(mMessageCallbacks, "paused", res);
         }
       })

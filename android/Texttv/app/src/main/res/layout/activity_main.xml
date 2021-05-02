@@ -12,7 +12,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <!--<com.google.android.material.appbar.MaterialToolbar
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:minHeight="0dp"
@@ -94,7 +94,7 @@
 
       </LinearLayout>
 
-    </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.MaterialToolbar>-->
 
   <!--<com.google.android.material.bottomnavigation.BottomNavigationView
     android:id="@+id/nav_view"

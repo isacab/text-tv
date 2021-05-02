@@ -1,8 +1,0 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
-  <Preference
-    app:fragment="com.vonlegohufvud.texttvsv.SettingsActivityNested$AppearanceFragment"
-    app:key="appearance_header"
-    app:title="@string/appearance_header" />
-
-</PreferenceScreen>
