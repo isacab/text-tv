@@ -6,6 +6,7 @@ import { environment } from '../../../../../environments/environment';
 import { AndroidInterfaceService } from 'src/app/services/android-interface.service';
 import { TextTvPage } from 'src/app/models/text-tv-page';
 import { TextTvService } from 'src/app/services/text-tv.service';
+import { StatusMessageService } from 'src/app/services/status-message.service';
 
 declare var window: any;
 declare var DocumentTouch: any;
@@ -36,7 +37,6 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   pageNumber: number | string;
   renderTheme: string = 'double-height-titles';
   renderDimensions: {};
-  textRendering: boolean = true;
 
   fontConfig = {
     //'Consolas': { class: null, contentWidth: 340, contentHeight: 392, letterWidth: 9 }, 
@@ -54,6 +54,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private appRef: ApplicationRef,
+    private statusMessage: StatusMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -82,16 +83,13 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     //   this.applyPreferences(preferences);
     //   this.init = true;
     // });
+    this.statusMessage.check();
   }
 
   ngAfterViewInit() {
     setTimeout(() => { 
       this.updateZoom(); 
     }, 0);
-    setTimeout(() => {
-      this.init = true;
-      this.appRef.tick();
-    }, 500);
     setTimeout(() => {
       this.updateZoom(); 
     }, 200);
@@ -150,20 +148,27 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pageNumber = page;
     let ready = false;
 
-    this._textTvPageSubscription = this.textTvService.getPage(page, forceRefetch, prefetch).subscribe(
-      res => {
-        if(res.subPages.length >= Math.min(2, res.totalNumberOfSubpages)) {
+    const callback = (res: TextTvPage) => {
+      if(res.subPages.length >= Math.min(2, res.totalNumberOfSubpages) || !res.ok) {
+        if(this.init) {
           ready = true;
           this.showLoadingOverlay = false;
           this.androidInterface.setRefreshing(false);
-          this.textTvPage = res;
+        } else {
+          setTimeout(() => { 
+            ready = true;
+            this.showLoadingOverlay = false;
+            this.androidInterface.setRefreshing(false);
+            this.init = true; 
+          }, 200);
         }
-      }, err => {
-        ready = true;
-        this.showLoadingOverlay = false;
-        this.androidInterface.setRefreshing(false);
-        this.textTvPage = err;
+        this.textTvPage = res;
       }
+    };
+
+    this._textTvPageSubscription = this.textTvService.getPage(page, forceRefetch, prefetch).subscribe(
+      callback, 
+      callback
     );
 
     setTimeout(() => {
@@ -247,7 +252,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   updateOrientation() {
-    if((window.innerWidth / window.innerHeight) > 1.75 && window.innerHeight <= 600) {
+    if((window.innerWidth / window.innerHeight) > 1.75 && window.innerHeight <= 600 && window.innerWidth <= 1100) {
       this.orientationClass = 'landscape';
     } else {
       this.orientationClass = 'portrait';

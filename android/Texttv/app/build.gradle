@@ -8,12 +8,12 @@ android {
     }
   compileSdkVersion 29
     buildToolsVersion "29.0.2"
-    defaultConfig {
+  defaultConfig {
         applicationId "com.vonlegohufvud.texttvsv"
-        minSdkVersion 15
+    minSdkVersion 24
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.1"
+    versionCode 5
+    versionName '2.0.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'WEB_APP_URL', '"file:///android_asset/www/index.html"'
         vectorDrawables.useSupportLibrary = true
@@ -25,7 +25,7 @@ android {
         }
         debug {
             //initWith(buildTypes.debug)
-            buildConfigField 'String', 'WEB_APP_URL', '"http://10.0.2.2:4200"'
+            //buildConfigField 'String', 'WEB_APP_URL', '"http://10.0.2.2:4200"'
         }
     }
     compileOptions {

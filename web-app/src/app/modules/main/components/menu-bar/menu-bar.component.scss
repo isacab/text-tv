@@ -47,26 +47,28 @@
     font-size: 32px;
 }
 
-.menu-container.vertical {
-    display: flex;
-    margin: auto;
-    max-width: initial;
-    width: $footer-width-landscape;
-    height: 100vh;
-    flex-direction: column-reverse;
-
-    .menu-item {
-        width: initial;
-    }
+@media screen and (orientation: landscape) {
+    .menu-container.vertical {
+        display: flex;
+        margin: auto;
+        max-width: initial;
+        width: $footer-width-landscape;
+        height: 100vh;
+        flex-direction: column-reverse;
     
-    /*.menu-item > .menu-action-btn.prev-arrow-down, 
-    .menu-item > .menu-action-btn.next-arrow-up {
-        display: initial;
+        .menu-item {
+            width: initial;
+        }
+        
+        /*.menu-item > .menu-action-btn.prev-arrow-down, 
+        .menu-item > .menu-action-btn.next-arrow-up {
+            display: initial;
+        }
+        .menu-item > .menu-action-btn.prev-arrow-left, 
+        .menu-item > .menu-action-btn.next-arrow-right {
+            display: none;
+        }*/
     }
-    .menu-item > .menu-action-btn.prev-arrow-left, 
-    .menu-item > .menu-action-btn.next-arrow-right {
-        display: none;
-    }*/
 }
 
 @media screen and (orientation: landscape) and (max-height: 200px) {

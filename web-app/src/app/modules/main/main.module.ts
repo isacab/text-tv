@@ -11,9 +11,11 @@ import { SwipeContainerComponent, Direction } from './components/swipe-container
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -33,6 +35,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     SafeHtmlPipe,
     SwipeContainerComponent,
     LoadingOverlayComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +44,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     HammerModule,
     ScrollingModule
   ],

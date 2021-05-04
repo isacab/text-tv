@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   client: 'web',
+  statusMesageUrl: 'https://texttvstatus.web.app/msg-example.json'
 };
 
 /*

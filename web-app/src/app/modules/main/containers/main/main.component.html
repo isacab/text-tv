@@ -1,7 +1,7 @@
 <div [ngClass]="['app-root', envClass, orientationClass, currentFontConfig.class, viewModeClass]" (window:resize)="windowSizeChanged()">
   <div class="app-main">
     <app-swipe-container (pageChange)="swipe($event)" [disabled]="swipeDisabled" [animationDisabled]="swipeAnimationDisabled">
-      <div #scrollWrapper class="renderer-wrapper">
+      <div #scrollWrapper class="renderer-wrapper" [class.hidden]="!init">
         <div #wrapper class="inner-renderer-wrapper double-height-titles">
           <div class="zoom-container" [ngStyle]="style">
             <app-renderer [pages]="textTvPage?.subPages" [theme]="renderTheme" (linkClick)="onLinkClick($event)"></app-renderer>
@@ -15,4 +15,4 @@
     <app-menu-bar [page]="pageNumber" [direction]="menuDirection" (pageChange)="pageChange($event)" (refreshClick)="refresh()" (nextClick)="next()" (prevClick)="prev()" (settingsClick)="openSettings()"></app-menu-bar>
   </div>
 </div>
-<div class="splash-overlay" *ngIf="!init"></div> 
+<!-- <div class="splash-overlay" *ngIf="!init"></div>  -->

@@ -28,7 +28,7 @@ public class TextTvFragment extends Fragment {
 
   CustomSwipeRefreshLayout mSwipeRefreshLayout;
   WebView mWebView;
-  LinearLayout mOverlay;
+  //LinearLayout mOverlay;
   SwipeRefreshLayout.OnRefreshListener mRefreshListener;
 
   public TextTvFragment() { }
@@ -38,7 +38,7 @@ public class TextTvFragment extends Fragment {
                            Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_text_tv, container, false);
 
-    mOverlay = v.findViewById(R.id.overlay);
+    //mOverlay = v.findViewById(R.id.overlay);
 
     mWebView = v.findViewById(R.id.web_view);
     mWebView.getSettings().setJavaScriptEnabled(true);
@@ -46,13 +46,14 @@ public class TextTvFragment extends Fragment {
     mWebView.getSettings().setAppCacheEnabled(true);
     mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
     mWebView.addJavascriptInterface(new WebAppInterface(getActivity(), mWebView), "Android");
-    mWebView.setWebViewClient(new WebViewClient() {
+    mWebView.setBackgroundColor(0);
+    /*mWebView.setWebViewClient(new WebViewClient() {
       @Override
       public void onPageFinished(WebView view, String url) {
         // Log.d("TextTvPageFragment", "onPageFinished");
         mOverlay.setVisibility(LinearLayout.GONE);
       }
-    });
+    });*/
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       mWebView.setWebContentsDebuggingEnabled(true);
     }

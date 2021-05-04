@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  <p>{{ data.body }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()" cdkFocusInitial>Stäng</button>
+  <button mat-button (click)="onCloseClick(true)" *ngIf="data.type === 2">Stäng och visa inte igen</button>
+</div>
