@@ -1,7 +1,6 @@
 package com.vonlegohufvud.texttvsv;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -12,9 +11,9 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -25,7 +24,7 @@ public class WebAppInterface {
   WebView mWebView;
   AppStateService mAppState = ServiceLocator.getInstance().getAppStateService();
 
-  List<String> mMessageCallbacks = new ArrayList<>();
+  Set<String> mMessageCallbacks = new HashSet<>();
 
   CompositeDisposable mSubscriptions;
 
@@ -109,12 +108,6 @@ public class WebAppInterface {
           runCallbacks(mMessageCallbacks, "resumed", res);
         }
       }),
-      mAppState.onFocus().subscribe(new Consumer<Integer>() {
-        @Override
-        public void accept(Integer res) {
-          runCallbacks(mMessageCallbacks, "focused", res);
-        }
-      }),
       mAppState.onPause().subscribe(new Consumer<Integer>() {
         @Override
         public void accept(Integer res) {
@@ -130,7 +123,7 @@ public class WebAppInterface {
     }
   }
 
-  protected void runCallbacks(List<String> callbacks, String message, Object details) {
+  protected void runCallbacks(Set<String> callbacks, String message, Object details) {
     String url = "javascript:";
 
     String detailsStr;
