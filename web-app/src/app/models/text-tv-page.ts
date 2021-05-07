@@ -11,4 +11,5 @@ export interface TextTvPage {
 export interface SubPage {
     subPageNumber: string;
     htmlContent: string;
+    time: number;
 }

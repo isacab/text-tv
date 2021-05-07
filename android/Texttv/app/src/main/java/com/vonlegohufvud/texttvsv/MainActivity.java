@@ -63,15 +63,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public void onWindowFocusChanged(boolean hasFocus) {
-    super.onWindowFocusChanged(hasFocus);
-    if(hasFocus && this.focusCount > 0) {
-      this.mAppState.triggerFocus(this.focusCount);
-    }
-    this.focusCount++;
-  }
-
-  @Override
   protected void onPause() {
     super.onPause();
     this.pauseCount++;

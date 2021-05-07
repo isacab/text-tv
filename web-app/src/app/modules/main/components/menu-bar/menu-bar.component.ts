@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { HotKeysService } from 'src/app/services/hot-keys.service';
 import { PageNumberInputComponent } from '../page-number-input/page-number-input.component';
 

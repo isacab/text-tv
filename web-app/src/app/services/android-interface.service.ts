@@ -13,7 +13,6 @@ export class AndroidInterfaceService {
   private refreshingSubject = new BehaviorSubject<boolean>(false);
   private preferencesSubject = new ReplaySubject<any>(1);
   private resumeSubject = new Subject<void>();
-  private focusSubject = new Subject<void>();
   private pauseSubject = new Subject<void>();
 
   constructor() {
@@ -32,8 +31,6 @@ export class AndroidInterfaceService {
             this.preferencesSubject.next(details);
           case 'resumed':
             this.resumeSubject.next();
-          case 'focused':
-            this.focusSubject.next();
           case 'paused':
             this.pauseSubject.next();
         }
@@ -58,7 +55,7 @@ export class AndroidInterfaceService {
   }
   setRefreshing(value: boolean): void {
     if(window.Android && this.refreshingSubject.getValue() != value) {
-      // console.log('setRefreshing', value);
+      console.log('setRefreshing', value);
       window.Android.setRefreshing(value);
     }
   }
@@ -76,10 +73,6 @@ export class AndroidInterfaceService {
 
   get onResume(): Observable<void> {
     return this.resumeSubject.asObservable();
-  }
-
-  get onFocus(): Observable<void> {
-    return this.focusSubject.asObservable();
   }
 
   get onPause(): Observable<void> {

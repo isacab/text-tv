@@ -4,7 +4,7 @@
       <div #scrollWrapper class="renderer-wrapper" [class.hidden]="!init">
         <div #wrapper class="inner-renderer-wrapper double-height-titles">
           <div class="zoom-container" [ngStyle]="style">
-            <app-renderer [pages]="textTvPage?.subPages" [theme]="renderTheme" (linkClick)="onLinkClick($event)"></app-renderer>
+            <app-renderer [pages]="textTvPage?.subPages" (linkClick)="onLinkClick($event)"></app-renderer>
           </div>
         </div>
       </div> 
