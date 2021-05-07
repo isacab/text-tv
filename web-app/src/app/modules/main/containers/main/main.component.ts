@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, ApplicationRef, AfterViewInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, NgZone } from '@angular/core';
+import { of, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '../../components/swipe-container/swipe-container.component';
 import { environment } from '../../../../../environments/environment';
@@ -7,6 +7,7 @@ import { AndroidInterfaceService } from 'src/app/services/android-interface.serv
 import { TextTvPage } from 'src/app/models/text-tv-page';
 import { TextTvService } from 'src/app/services/text-tv.service';
 import { StatusMessageService } from 'src/app/services/status-message.service';
+import { catchError, filter } from 'rxjs/operators';
 
 declare var window: any;
 declare var DocumentTouch: any;
@@ -53,7 +54,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private androidInterface: AndroidInterfaceService,
     private route: ActivatedRoute,
     private router: Router,
-    private appRef: ApplicationRef,
+    private ngZone: NgZone,
     private statusMessage: StatusMessageService,
   ) { }
 
@@ -62,7 +63,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updateOrientation();
     this.route.paramMap.subscribe(params => {
       let param = params.get('page');
-      if (params.get('page') == null || params.get('page') == '') {
+      if (param == null || param == '') {
         param = '100';
       }
       const page = parseInt(param, 10);
@@ -71,12 +72,16 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.swipeDisabled = this.isDesktop() && environment.production;
     this.androidInterface.refreshing.subscribe(refreshing => {
       if (refreshing) {
-        this.refresh(false);
+        this.ngZone.run(() => {
+          this.refresh(false);
+        });
       }
     });
     this.androidInterface.onResume.subscribe(() => {
       if (this.textTvPage && this.init) {
-        this.refresh(true, false, false);
+        this.ngZone.run(() => {
+          this.refresh(true, false, false);
+        });
       }
     });
     // this.androidInterface.preferences.subscribe(preferences => {
@@ -137,10 +142,10 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // check is currently fetching page
     if (this._textTvPageSubscription && !this._textTvPageSubscription.closed) {
-      if (this._lastFetchedPageNumber === page) {
-        return; // is already fetching page 
+      if (this._lastFetchedPageNumber === page && this.textTvPage.pageNumber !== page) {
+        return; // is already fetching this page 
       } else {
-        this._textTvPageSubscription.unsubscribe(); // if new page then cancel current subscription
+        this._textTvPageSubscription.unsubscribe(); // cancel current subscription
       }
     } 
 
@@ -148,28 +153,22 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pageNumber = page;
     let ready = false;
 
-    const callback = (res: TextTvPage) => {
-      if(res.subPages.length >= Math.min(2, res.totalNumberOfSubpages) || !res.ok) {
-        if(this.init) {
-          ready = true;
-          this.showLoadingOverlay = false;
-          this.androidInterface.setRefreshing(false);
-        } else {
-          setTimeout(() => { 
-            ready = true;
-            this.showLoadingOverlay = false;
-            this.androidInterface.setRefreshing(false);
+    this._textTvPageSubscription = this.textTvService.getPage(page, forceRefetch, prefetch)
+      .pipe(
+        filter((res: TextTvPage) => res.subPages.length >= Math.min(2, res.totalNumberOfSubpages)),
+        catchError((err: TextTvPage) => of(err))
+      )
+      .subscribe(res => {
+        ready = true;
+        this.showLoadingOverlay = false;
+        this.androidInterface.setRefreshing(false);
+        this.textTvPage = res;
+        if(!this.init) {
+          setTimeout(() => {
             this.init = true; 
           }, 200);
         }
-        this.textTvPage = res;
-      }
-    };
-
-    this._textTvPageSubscription = this.textTvService.getPage(page, forceRefetch, prefetch).subscribe(
-      callback, 
-      callback
-    );
+      });
 
     setTimeout(() => {
       if(!ready) {

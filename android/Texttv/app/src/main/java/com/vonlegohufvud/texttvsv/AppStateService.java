@@ -18,7 +18,6 @@ public class AppStateService {
   private ReplaySubject<Boolean> mRefreshingSubject = ReplaySubject.createWithSize(1);
   private ReplaySubject<Map<String, ?>> mPreferencesSubject = ReplaySubject.createWithSize(1);
   private PublishSubject<Integer> mResumeSubject = PublishSubject.create();
-  private PublishSubject<Integer> mFocusSubject = PublishSubject.create();
   private PublishSubject<Integer> mPauseSubject = PublishSubject.create();
 
   public AppStateService() {
@@ -90,14 +89,6 @@ public class AppStateService {
 
   public void triggerResume(Integer count) {
     this.mResumeSubject.onNext(count);
-  }
-
-  public Observable onFocus() {
-    return mFocusSubject.hide();
-  }
-
-  public void triggerFocus(Integer count) {
-    this.mFocusSubject.onNext(count);
   }
 
   public Observable onPause() {

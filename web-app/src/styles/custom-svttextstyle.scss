@@ -72,6 +72,10 @@ pre.root a:active {
     font-size: inherit;
     letter-spacing: inherit;
     font-weight: bold;
+    position: relative;
+}
+.bold-titles pre.root .DH > .SC {
+    top: 0.5em;
 }
 /* #endregion Theme normal size titles */
 

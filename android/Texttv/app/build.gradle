@@ -12,7 +12,7 @@ android {
         applicationId "com.vonlegohufvud.texttvsv"
     minSdkVersion 24
         targetSdkVersion 29
-    versionCode 5
+    versionCode 6
     versionName '2.0.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'WEB_APP_URL', '"file:///android_asset/www/index.html"'
@@ -26,6 +26,7 @@ android {
         debug {
             //initWith(buildTypes.debug)
             //buildConfigField 'String', 'WEB_APP_URL', '"http://10.0.2.2:4200"'
+            //buildConfigField 'String', 'WEB_APP_URL', '"http://localhost:4200"'
         }
     }
     compileOptions {

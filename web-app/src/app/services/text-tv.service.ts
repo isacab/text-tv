@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of, concat, Subscriber, merge, EMPTY } from 'rxjs';
-import { map, catchError, switchMap, shareReplay, tap, startWith, filter, mergeMap } from 'rxjs/operators';
-import { SvtResponse, SvtSubPage } from '../models/svt-response';
+import { map, catchError, switchMap, shareReplay, tap, startWith, filter, mergeMap, delay } from 'rxjs/operators';
+import { SvtResponse } from '../models/svt-response';
 import { SubPage, TextTvPage } from '../models/text-tv-page';
 import { CellData, GridData } from '../models/grid-data';
 import { characterMap } from './character-map';
@@ -77,7 +77,7 @@ export class TextTvService {
     const nextPageNumber = parseInt(response.data.nextPage);
     const prevPageNumber = parseInt(response.data.prevPage);
     
-    if(response.status == 'fail' || !response.data.subPages?.length) {
+    if(response.status === 'fail' || !response.data.subPages?.length) {
       throw this.createErrorPage('Sidan ej i sändning', page, nextPageNumber, prevPageNumber);
     }
 
@@ -124,7 +124,8 @@ export class TextTvService {
       if(!subscriber.closed) {
         const newSubPage = {
           subPageNumber: sp.subPageNumber,
-          htmlContent: html
+          htmlContent: html,
+          time: Date.now() 
         } as SubPage;
         // console.timeEnd('createSubPage ' + sp.subPageNumber);
         subscriber.next(newSubPage);
@@ -147,13 +148,14 @@ export class TextTvService {
   private createErrorPage(error: HttpErrorResponse | string, page: number, nextPage?: number, prevPage?: number): TextTvPage {
     return {
       ok: false,
+      updated: null,
       pageNumber: page,
       nextPageNumber: nextPage || Math.min(page+1, 999),
       prevPageNumber: prevPage || Math.max(page-1, 100),
       subPages: [{
         subPageNumber: '',
-        updated: Date.now().toString(),
-        htmlContent: `<div class="error-message"><pre class="root">${this.getErrorMessage(error)}</pre></div>`
+        htmlContent: `<div class="error-message"><pre class="root">${this.getErrorMessage(error)}</pre></div>`,
+        time: Date.now()
       } as SubPage],
       totalNumberOfSubpages: 1
     } as TextTvPage;
