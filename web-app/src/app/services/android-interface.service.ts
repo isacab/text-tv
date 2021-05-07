@@ -17,9 +17,6 @@ export class AndroidInterfaceService {
   private pauseSubject = new Subject<void>();
 
   constructor() {
-    if(!window.Android && !environment.production && environment.client == 'android') { // use mock interface when debugging android app in browser
-      window.Android = new MockAndroidInterface();
-    }
     if (window.Android) {
       window.Android.receiveMessage = (message: string, details: any) => {
         // console.log('window.Android.receiveMessage', message, details);
@@ -88,56 +85,4 @@ export class AndroidInterfaceService {
   get onPause(): Observable<void> {
     return this.pauseSubject.asObservable();
   }
-}
-
-class MockAndroidInterface {
-
-  private callback: string;
-  private focusCounter = 0;
-  private preferences = {
-    // font: 'Fira Mono',
-    // font: 'Droid Sans Mono',
-     font: 'Inconsolata',
-    // font: 'Roboto Mono',
-    zoomLevel: 1,
-  };
-
-  constructor() {
-    window.addEventListener('focus', (event) => {
-      this.runCallback('focused', ++this.focusCounter);
-    });
-  }
-
-  onMessage(callback: string) {
-    if(typeof callback !== 'string')
-      this.callback = undefined;
-    this.callback = callback.replace(/^window\./i, '');
-  }
-
-  setPage(value: number) {
-      this.runCallback('page_changed', value);
-  }
-
-  setRefreshing(value: boolean) {
-    this.runCallback('refreshing_changed', value);
-  }
-
-  getPreferences() {
-    this.runCallback('preferences_get', this.preferences);
-  }
-
-  openSettings() {
-  }
-
-  private runCallback(message: string, value: any) {
-    if(this.callback) {
-      setTimeout(() => {
-        console.log(message, value);
-        let fun = window;
-        this.callback.split('.').forEach(x => fun = fun[x]);
-        fun(message, value);
-      }, 0);
-    }
-  }
-
 }
