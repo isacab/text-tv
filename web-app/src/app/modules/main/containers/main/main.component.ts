@@ -8,6 +8,8 @@ import { TextTvPage } from 'src/app/models/text-tv-page';
 import { TextTvService } from 'src/app/services/text-tv.service';
 import { StatusMessageService } from 'src/app/services/status-message.service';
 import { catchError, filter } from 'rxjs/operators';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MoreMenuBottomSheetComponent } from '../../components/more-menu-bottom-sheet/more-menu-bottom-sheet.component';
 
 declare var window: any;
 declare var DocumentTouch: any;
@@ -56,6 +58,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private ngZone: NgZone,
     private statusMessage: StatusMessageService,
+    private bottomSheet: MatBottomSheet
   ) { }
 
   ngOnInit(): void {
@@ -174,7 +177,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       if(!ready) {
         this.showLoadingOverlay = showLoadingOverlay;
       }
-    }, 333);
+    }, 0); //333);
 
     setTimeout(() => {
       (document.activeElement as HTMLElement).blur();
@@ -217,6 +220,14 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openSettings() {
     this.androidInterface.openSettings();
+  }
+
+  moreMenu() {
+    this.bottomSheet.open(MoreMenuBottomSheetComponent);
+  }
+
+  home() {
+    this.pageChange(100);
   }
 
   // applyPreferences(preferences: any): void {

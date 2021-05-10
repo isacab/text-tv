@@ -15,8 +15,9 @@ export class MenuBarComponent implements OnInit {
   @Output() pageChange = new EventEmitter<number>();
   @Output() prevClick = new EventEmitter();
   @Output() nextClick = new EventEmitter();
-  @Output() settingsClick = new EventEmitter();
+  @Output() moreClick = new EventEmitter();
   @Output() refreshClick = new EventEmitter();
+  @Output() homeClick = new EventEmitter();
 
   @ViewChild(PageNumberInputComponent, { static: true }) pageNumberInputRef: PageNumberInputComponent;
 
@@ -39,8 +40,12 @@ export class MenuBarComponent implements OnInit {
     this.prevClick.emit();
   }
 
-  settings() {
-    this.settingsClick.emit();
+  more() {
+    this.moreClick.emit();
+  }
+
+  home() {
+    this.homeClick.emit();
   }
 
   refresh() {

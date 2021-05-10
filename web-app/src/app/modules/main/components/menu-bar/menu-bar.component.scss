@@ -21,7 +21,7 @@
 }
 
 .menu-item {
-    flex: 1 1 0;
+    flex: 2 1 0;
     color: #fafafa;
     display: flex;
     justify-content: center;
@@ -45,6 +45,17 @@
 
 .menu-item > .menu-action-btn .material-icons {
     font-size: 32px;
+}
+
+.menu-container-main {
+    display: flex;
+    flex: 1 1 auto;
+}
+.menu-item.small {
+    // flex: 0 0 50px;
+    > .menu-action-btn i.material-icons {
+        font-size: 28px;
+    }
 }
 
 @media screen and (orientation: landscape) {

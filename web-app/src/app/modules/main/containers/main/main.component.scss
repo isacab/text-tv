@@ -119,3 +119,33 @@
 .hidden {
     visibility: hidden;
 }
+
+.app-header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    // justify-content: flex-end;
+    background-color: $menu-bg-color;
+    span {
+        margin: 0 36px;
+        font-size: 19px;
+        font-weight: bold;
+        flex: 1;
+    }
+}
+.info-action-btn {
+    // position: absolute;
+    // right: 24px;
+    // top: 24px;
+    font-size: 10px;
+    z-index: 9;
+    min-width: initial;
+    min-height: initial;
+    padding: 0;
+    //color: #888;
+    line-height: initial;
+}
+.info-action-btn:hover,
+.info-action-btn:active {
+    color: #fff;
+}

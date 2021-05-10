@@ -1,4 +1,10 @@
 <div [ngClass]="['app-root', envClass, orientationClass, currentFontConfig.class, viewModeClass]" (window:resize)="windowSizeChanged()">
+  <!-- <button mat-icon-button class="info-action-btn" title="Info" (click)="moreMenu()"><i class="material-icons">more_horiz</i></button> -->
+  <!-- <div class="app-header">
+    <span>TextTv</span>
+    <button mat-button class="more-action-btn" title="Uppdatera" (click)="refresh()"><i class="material-icons">refresh</i></button>
+    <button mat-button class="more-action-btn" title="Mer" (click)="moreMenu()"><i class="material-icons">more_vert</i></button>
+  </div> -->
   <div class="app-main">
     <app-swipe-container (pageChange)="swipe($event)" [disabled]="swipeDisabled" [animationDisabled]="swipeAnimationDisabled">
       <div #scrollWrapper class="renderer-wrapper" [class.hidden]="!init">
@@ -12,7 +18,7 @@
     <app-loading-overlay *ngIf="showLoadingOverlay"></app-loading-overlay>
   </div>
   <div class="app-footer">
-    <app-menu-bar [page]="pageNumber" [direction]="menuDirection" (pageChange)="pageChange($event)" (refreshClick)="refresh()" (nextClick)="next()" (prevClick)="prev()" (settingsClick)="openSettings()"></app-menu-bar>
+    <app-menu-bar [page]="pageNumber" [direction]="menuDirection" (pageChange)="pageChange($event)" (refreshClick)="refresh(true, true, false)" (homeClick)="home()" (nextClick)="next()" (prevClick)="prev()" (moreClick)="moreMenu()"></app-menu-bar>
   </div>
 </div>
 <!-- <div class="splash-overlay" *ngIf="!init"></div>  -->

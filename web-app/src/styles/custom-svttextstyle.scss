@@ -36,6 +36,9 @@ pre.root {
     letter-spacing: 0.5px;
     line-height: 17px;
 }
+pre.root:first-child {
+    margin-top: 1em;
+}
 pre.root span {
     display: inline-block;
     height: 17px;
