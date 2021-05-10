@@ -5,7 +5,6 @@
     display: block;
 
     .app-main {
-        user-select: text;
         min-height: calc(100vh - #{$footer-height-lg});
         padding-bottom: $footer-height-lg;
     }
@@ -24,6 +23,7 @@
         flex: 1;
         display: flex;
         min-height: calc(100vh - #{$footer-height-lg});
+        user-select: text;
     }
 
     .inner-renderer-wrapper {
