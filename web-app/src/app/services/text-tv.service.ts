@@ -222,14 +222,7 @@ export class TextTvService {
         dh = false;
       }
       htmlLine += '</span>';
-      if (this.shouldInsertLinks(page, row)) {
-        // htmlLine = htmlLine.replace(/(?<![0-9])[1-9][0-9][0-9](?![0-9])/g, (num) => { 
-        htmlLine = htmlLine.replace(/(^|[^0-9])[1-9][0-9][0-9](?![0-9])/g, (num) => { // lookbehind not supported in older browsers
-          let behind = num.substr(0, num.length - 3);
-          num = num.substr(num.length - 3);
-          return `${behind}<a href="${num}">${num}</a>`;
-        });
-      }
+      htmlLine = this.insertLinks(htmlLine, page, row);
       lines.push(htmlLine);
       htmlLine = '';
     }
@@ -237,15 +230,45 @@ export class TextTvService {
     return fullHtml;
   }
 
-  private shouldInsertLinks(page: number, row: number): boolean {
-    if (row === 0)
-      return false;
-    else if ((row === 1 || row === this.gridHeight-2) && !(page >= 202 && page <= 246))
-      return true;
-    else if (page <= 105 || (page >= 190 && page <= 201) || (page >= 247 && page <= 302) || page === 330 || page === 376 || page === 400 || page === 420 || (page >= 500 && page <= 520) || page >= 550)
-      return true;
-    else
-      return false;
+  private insertLinks(htmlLine, page, row): string {
+    const mode = this.shouldInsertLinks(page, row);
+    
+    if(mode === InsertLinksMode.No) {
+      return htmlLine;
+    }
+
+    let regex;
+    if(mode === InsertLinksMode.Yes) {
+      regex = /([^0-9])[1-9][0-9][0-9](?![0-9])/g;
+      // regex = /(?<![0-9])[1-9][0-9][0-9](?![0-9])/g // lookbehind not supported in older browsers
+    } else if (mode === InsertLinksMode.FirstPageSpecial) {
+      regex = /([>* \-.])[1-9][0-9][0-9](?=((<\/span>|[* \-.])(<\/span>|[* \-.]|$)))/g;
+    } else if (mode === InsertLinksMode.IfLast) {
+      regex = /([^0-9])[1-9][0-9][0-9](?=f?(-[1-9][0-9][0-9]f?)?([ .\-*]*(<\/span>))+$)/g;
+    }
+
+    return htmlLine.replace(regex, (num) => { // lookbehind not supported in older browsers
+      let behind = num.substr(0, num.length - 3);
+      num = num.substr(num.length - 3);
+      return `${behind}<a href="${num}">${num}</a>`;
+    });
+  }
+
+  private shouldInsertLinks(page: number, row: number): InsertLinksMode {
+    if (row === 0 || page >= 711)
+      return InsertLinksMode.No;
+    else if ( ((row === 1 || row === this.gridHeight-2) && !(page >= 202 && page <= 246)) 
+       || page === 330 || (page >= 190 && page <= 201) || (page >= 247 && page <= 299) || page === 400 || page === 420 || (page >= 550 && page <= 710))
+      return InsertLinksMode.Yes;
+    else if (page <= 105 || (page >= 300 && page <= 302) || page === 376) {
+      if(row === this.gridHeight-3)
+        return InsertLinksMode.Yes;
+      else if(page === 100)
+        return InsertLinksMode.FirstPageSpecial;
+      else
+        return InsertLinksMode.IfLast;
+    }
+    return InsertLinksMode.No;
   }
 
   private extractCharactersFromImage(img: HTMLImageElement): { gridData: GridData, imgSrc: string } { 
@@ -409,3 +432,10 @@ export class TextTvService {
   }
 
 }
+
+enum InsertLinksMode {
+  No,
+  Yes,
+  FirstPageSpecial,
+  IfLast
+ };
