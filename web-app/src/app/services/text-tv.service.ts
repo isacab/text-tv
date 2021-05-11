@@ -247,8 +247,8 @@ export class TextTvService {
       regex = /([^0-9])[1-9][0-9][0-9](?=f?(-[1-9][0-9][0-9]f?)?([ .\-*]*(<\/span>))+$)/g;
     }
 
-    return htmlLine.replace(regex, (num) => { // lookbehind not supported in older browsers
-      let behind = num.substr(0, num.length - 3);
+    return htmlLine.replace(regex, (num) => { 
+      let behind = num.substr(0, num.length - 3); // lookbehind not supported in older browsers
       num = num.substr(num.length - 3);
       return `${behind}<a href="${num}">${num}</a>`;
     });
