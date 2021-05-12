@@ -242,9 +242,9 @@ export class TextTvService {
       regex = /([^0-9])[1-9][0-9][0-9](?![0-9])/g;
       // regex = /(?<![0-9])[1-9][0-9][0-9](?![0-9])/g // lookbehind not supported in older browsers
     } else if (mode === InsertLinksMode.FirstPageSpecial) {
-      regex = /([>* \-.])[1-9][0-9][0-9](?=((<\/span>|[* \-.])(<\/span>|[* \-.]|$)))/g;
+      regex = /([>* \-.\/\\])[1-9][0-9][0-9](?=((<\/span>|[f* \-.]|[\-\/\\][1-9][0-9][0-9])(<\/span>|[* \-.]|$)))/g;
     } else if (mode === InsertLinksMode.IfLast) {
-      regex = /([^0-9])[1-9][0-9][0-9](?=f?(-[1-9][0-9][0-9]f?)?([ .\-*]*(<\/span>))+$)/g;
+      regex = /([^0-9])[1-9][0-9][0-9](?=f?([-\/\\][1-9][0-9][0-9]f?)?([ .\-*]*(<\/span>))+$)/g;
     }
 
     return htmlLine.replace(regex, (num) => { 
