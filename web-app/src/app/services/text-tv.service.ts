@@ -92,7 +92,7 @@ export class TextTvService {
           ok: true,
           updated: response.data.meta?.updated,
           pageNumber: page,
-          nextPageNumber: nextPageNumber || Math.min(page+1, 999),
+          nextPageNumber: nextPageNumber || Math.min(page+1, 899),
           prevPageNumber: prevPageNumber || Math.max(page-1, 100),
           subPages: [],
           totalNumberOfSubpages: response.data.subPages.length,
@@ -150,7 +150,7 @@ export class TextTvService {
       ok: false,
       updated: null,
       pageNumber: page,
-      nextPageNumber: nextPage || Math.min(page+1, 999),
+      nextPageNumber: nextPage || Math.min(page+1, 899),
       prevPageNumber: prevPage || Math.max(page-1, 100),
       subPages: [{
         subPageNumber: '',
@@ -239,12 +239,12 @@ export class TextTvService {
 
     let regex;
     if(mode === InsertLinksMode.Yes) {
-      regex = /([^0-9])[1-9][0-9][0-9](?![0-9])/g;
+      regex = /([^0-9])[1-8][0-9][0-9](?![0-9])/g;
       // regex = /(?<![0-9])[1-9][0-9][0-9](?![0-9])/g // lookbehind not supported in older browsers
     } else if (mode === InsertLinksMode.FirstPageSpecial) {
-      regex = /([>* \-.\/\\])[1-9][0-9][0-9](?=((<\/span>|[f* \-.]|[\-\/\\][1-9][0-9][0-9])(<\/span>|[* \-.]|$)))/g;
+      regex = /([>* \-.\/\\])[1-8][0-9][0-9](?=((<\/span>|[f* \-.]|[\-\/\\][1-8][0-9][0-9])(<\/span>|[* \-.]|$)))/g;
     } else if (mode === InsertLinksMode.IfLast) {
-      regex = /([^0-9])[1-9][0-9][0-9](?=f?([-\/\\][1-9][0-9][0-9]f?)?([ .\-*]*(<\/span>))+$)/g;
+      regex = /([^0-9])[1-8][0-9][0-9](?=f?([-\/\\][1-8][0-9][0-9]f?)?([ .\-*]*(<\/span>))+$)/g;
     }
 
     return htmlLine.replace(regex, (num) => { 
