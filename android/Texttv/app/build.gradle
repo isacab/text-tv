@@ -12,8 +12,8 @@ android {
         applicationId "com.vonlegohufvud.texttvsv"
     minSdkVersion 24
         targetSdkVersion 29
-    versionCode 10
-    versionName '2.0.0'
+    versionCode 11
+    versionName '2.0.2'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'WEB_APP_URL', '"file:///android_asset/www/index.html"'
         vectorDrawables.useSupportLibrary = true
