@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="56dp"
+  android:background="@color/colorPrimary"
+  app:layout_constraintBottom_toBottomOf="parent">
+
+  <EditText
+    android:id="@+id/findInPageEditText"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:hint="Hitta på sida"
+    android:textColorHint="@color/colorTextHint"
+    android:textCursorDrawable="@null"
+    app:layout_constraintEnd_toStartOf="@+id/textViewFindResult"
+    app:layout_constraintStart_toStartOf="parent"
+    android:maxLines="1"
+    android:inputType="text"
+    android:textColor="@color/colorText"
+    android:imeOptions="actionSearch|flagNoExtractUi"
+    android:padding="16dp"
+    android:selectAllOnFocus="true"/>
+
+  <TextView
+    android:id="@+id/textViewFindResult"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=""
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/divider"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp" />
+
+  <View
+    android:id="@+id/divider"
+    android:layout_width="1dp"
+    android:layout_height="38dp"
+    android:background="?android:attr/listDivider"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/buttonPrevResult"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"/>
+
+  <ImageButton
+    android:id="@+id/buttonPrevResult"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/buttonIcon"
+    app:srcCompat="@drawable/ic_expand_less_black_24dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/buttonNextResult"
+    app:iconGravity="textStart"
+    app:iconPadding="0dp"/>
+
+  <ImageButton
+    android:id="@+id/buttonNextResult"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/buttonIcon"
+    app:srcCompat="@drawable/ic_expand_more_black_24dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/buttonCloseFindInPage"
+    app:iconGravity="textStart"
+    app:iconPadding="0dp"/>
+
+  <ImageButton
+    android:id="@+id/buttonCloseFindInPage"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/buttonIcon"
+    app:srcCompat="@drawable/ic_close_black_24dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:iconGravity="textStart"
+    app:iconPadding="0dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

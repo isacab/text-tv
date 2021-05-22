@@ -6,12 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment
-      android:name="com.vonlegohufvud.texttvsv.texttv.TextTvFragment"
-      android:id="@+id/textTvFragment"
+  <com.vonlegohufvud.texttvsv.shared.CustomSwipeRefreshLayout
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+    <WebView
+      android:id="@+id/web_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@android:color/transparent"/>
+      android:overScrollMode="never"
+      >
+    </WebView>
+  </com.vonlegohufvud.texttvsv.shared.CustomSwipeRefreshLayout>
+
+  <fragment
+    android:id="@+id/find_in_page_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:name="com.vonlegohufvud.texttvsv.fragments.FindInPageFragment"
+    app:layout_constraintBottom_toBottomOf="parent" />
 
     <!--<com.google.android.material.appbar.MaterialToolbar
       android:layout_width="0dp"

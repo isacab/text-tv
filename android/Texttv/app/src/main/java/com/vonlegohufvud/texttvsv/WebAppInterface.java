@@ -1,6 +1,8 @@
 package com.vonlegohufvud.texttvsv;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -20,7 +22,7 @@ import io.reactivex.functions.Consumer;
 
 public class WebAppInterface {
 
-  Activity mActivity;
+  MainActivity mActivity;
   WebView mWebView;
   AppStateService mAppState = ServiceLocator.getInstance().getAppStateService();
 
@@ -30,7 +32,7 @@ public class WebAppInterface {
 
   //public static final int SETTINGS_REQUEST_CODE = 1;
 
-  public WebAppInterface(Activity activity, WebView webView) {
+  public WebAppInterface(MainActivity activity, WebView webView) {
     mActivity = activity;
     mWebView = webView;
     initSubscriptions();
@@ -45,7 +47,27 @@ public class WebAppInterface {
     mMessageCallbacks.add(callback);
   }
 
-  /*@JavascriptInterface
+  @JavascriptInterface
+  public void setBlockExit(String value) {
+    try {
+      boolean blockExit = Boolean.parseBoolean(value);
+      mAppState.setBlockExit(blockExit);
+    } catch (NumberFormatException e) {
+      Log.d("setBlockExit", e.getMessage() + e.getStackTrace().toString());
+    }
+  }
+
+  @JavascriptInterface
+  public void setShowFindInPage(String value) {
+    try {
+      boolean showFindInPage = Boolean.parseBoolean(value);
+      mAppState.setShowFindInPage(showFindInPage);
+    } catch (Exception e) {
+      Log.d("showFindInPage", e.getMessage() + e.getStackTrace().toString());
+    }
+  }
+
+  @JavascriptInterface
   public void setPage(String value) {
     try {
       int page = Integer.parseInt(value);
@@ -53,7 +75,7 @@ public class WebAppInterface {
     } catch (NumberFormatException e) {
       Log.d("setPage", e.getMessage() + e.getStackTrace().toString());
     }
-  }*/
+  }
 
   @JavascriptInterface
   public void setRefreshing(String value) {
@@ -81,13 +103,23 @@ public class WebAppInterface {
     }
   }*/
 
+  @JavascriptInterface
+  public void openInBrowser(String url) {
+    try {
+      Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+      mActivity.startActivity(browserIntent);
+    } catch (Exception e) {
+      Log.d("openInBrowser", e.getMessage() + e.getStackTrace().toString());
+    }
+  }
+
   protected void initSubscriptions() {
     mSubscriptions = new CompositeDisposable();
     mSubscriptions.addAll(
       /*mAppState.getPage().subscribe(new Consumer<Integer>() {
         @Override
         public void accept(Integer res) {
-          runCallbacks(mMessageCallbacks, "page_changed", res);
+          //runCallbacks(mMessageCallbacks, "page_changed", res);
         }
       }),*/
       mAppState.getRefreshing().subscribe(new Consumer<Boolean>() {
@@ -100,6 +132,24 @@ public class WebAppInterface {
         @Override
         public void accept(Map<String, ?> res) {
           runCallbacks(mMessageCallbacks, "preferences_changed", res);
+        }
+      }),
+      mAppState.getCanGoForward().subscribe(new Consumer<Boolean>() {
+        @Override
+        public void accept(Boolean res) throws Exception {
+          runCallbacks(mMessageCallbacks, "can_go_forward_changed", res);
+        }
+      }),
+      mAppState.getBlockExit().subscribe(new Consumer<Boolean>() {
+        @Override
+        public void accept(Boolean res) throws Exception {
+          runCallbacks(mMessageCallbacks, "block_exit_changed", res);
+        }
+      }),
+      mAppState.getShowFindInPage().subscribe(new Consumer<Boolean>() {
+        @Override
+        public void accept(Boolean res) throws Exception {
+          runCallbacks(mMessageCallbacks, "show_find_in_page_changed", res);
         }
       }),
       mAppState.onResume().subscribe(new Consumer<Integer>() {

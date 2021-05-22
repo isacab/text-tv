@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="@style/Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -20,6 +20,8 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorOnBackground">@color/colorBackground</item>
 
+      <item name="android:textColorHint">@color/colorTextHint</item>
+
     </style>
 
   <style name="ButtonNoPadding" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
@@ -30,6 +32,15 @@
     <item name="backgroundTint">#ff0000</item>
     <item name="cornerFamily">cut</item>
     <item name="cornerSize">0dp</item>
+  </style>
+
+  <style name="buttonIcon" parent="@style/Widget.AppCompat.ActionButton">
+    <item name="android:minHeight">0dp</item>
+    <item name="android:minWidth">0dp</item>
+    <item name="android:insetTop">0dp</item>
+    <item name="android:insetBottom">0dp</item>
+    <item name="backgroundTint">@android:color/transparent</item>
+    <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
   </style>
 
 </resources>

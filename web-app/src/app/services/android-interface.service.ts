@@ -9,8 +9,11 @@ declare var window: any;
 })
 export class AndroidInterfaceService {
 
-  private pageSubject = new ReplaySubject<number>(1);
+  // private pageSubject = new ReplaySubject<number>(1);
   private refreshingSubject = new BehaviorSubject<boolean>(false);
+  private canGoForwardSubject = new BehaviorSubject<boolean>(false);
+  private blockExitSubject = new BehaviorSubject<boolean>(false);
+  private showFindInPageSubject = new BehaviorSubject<boolean>(false);
   private preferencesSubject = new ReplaySubject<any>(1);
   private resumeSubject = new Subject<void>();
   private pauseSubject = new Subject<void>();
@@ -20,19 +23,31 @@ export class AndroidInterfaceService {
       window.Android.receiveMessage = (message: string, details: any) => {
         // console.log('window.Android.receiveMessage', message, details);
         switch(message) {
-          case 'page_changed':
-            this.pageSubject.next(details);
-            break;
+          // case 'page_changed':
+          //   this.pageSubject.next(details);
+          //   break;
           case 'refreshing_changed': 
             this.refreshingSubject.next(details);
+            break;
+          case 'can_go_forward_changed':
+            this.canGoForwardSubject.next(details);
+            break;
+          case 'block_exit_changed':
+            this.blockExitSubject.next(details);
+            break;
+          case 'show_find_in_page_changed':
+            this.showFindInPageSubject.next(details);
             break;
           case 'preferences_changed':
           case 'preferences_get':
             this.preferencesSubject.next(details);
+            break;
           case 'resumed':
             this.resumeSubject.next();
+            break;
           case 'paused':
             this.pauseSubject.next();
+            break;
         }
       };
       window.Android.onMessage("window.Android.receiveMessage");
@@ -40,13 +55,31 @@ export class AndroidInterfaceService {
     }
   }
 
-  get page(): Observable<number> {
-    return this.pageSubject.asObservable();
+  // get page(): Observable<number> {
+  //   return this.pageSubject.asObservable();
+  // }
+  // setPage(value: number): void {
+  //   if (window.Android) {
+  //     // console.log('setPage', value);
+  //     window.Android.setPage(value);
+  //   }
+  // }
+
+  setBlockExit(value: boolean): void {
+    if(window.Android) {
+      window.Android.setBlockExit(value);
+    }
   }
-  setPage(value: number): void {
-    if (window.Android) {
-      console.log('setPage', value);
-      window.Android.setPage(value);
+
+  openInBrowser(url: string): void {
+    if(window.Android) {
+      window.Android.openInBrowser(url);
+    }
+  }
+
+  setShowFindInPage(value: boolean): void {
+    if(window.Android && this.showFindInPageSubject.getValue() != value) {
+      window.Android.setShowFindInPage(value);
     }
   }
 
@@ -55,20 +88,25 @@ export class AndroidInterfaceService {
   }
   setRefreshing(value: boolean): void {
     if(window.Android && this.refreshingSubject.getValue() != value) {
-      console.log('setRefreshing', value);
+      // console.log('setRefreshing', value);
       window.Android.setRefreshing(value);
     }
   }
 
-  get preferences(): Observable<any> {
-    return this.preferencesSubject.asObservable();
+  get canGoForward(): Observable<boolean> {
+    return this.canGoForwardSubject.asObservable();
   }
 
-  openSettings(): void {
-    if (window.Android) {
-      // console.log('openSettings');
-      window.Android.openSettings();
-    }
+  get blockExit(): Observable<boolean> {
+    return this.blockExitSubject.asObservable();
+  }
+
+  get showFindInPage(): Observable<boolean> {
+    return this.showFindInPageSubject.asObservable();
+  }
+
+  get preferences(): Observable<any> {
+    return this.preferencesSubject.asObservable();
   }
 
   get onResume(): Observable<void> {

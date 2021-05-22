@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { StatusMessage, StatusMessageType } from '../models/status-message';
 import { DialogComponent } from '../modules/main/components/dialog/dialog.component';
+import { ClosePopupsService } from './close-popups.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class StatusMessageService {
 
   constructor(
     private http: HttpClient,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private closePopupService: ClosePopupsService
   ) { }
 
   check(): void {
@@ -21,6 +23,9 @@ export class StatusMessageService {
         const dialogRef = this.dialog.open(DialogComponent, { 
           data: msg,
           disableClose: true
+        });
+        dialogRef.afterOpened().subscribe(() => {
+          this.closePopupService.add(dialogRef);
         });
         dialogRef.afterClosed().subscribe((doNotShowAgain: boolean) => {
           if(doNotShowAgain) {

@@ -16,3 +16,47 @@ body * {
 @import 'styles/texttv-app-theme.scss';
 @import 'styles/view-modes.scss';
 @import 'styles/custom-svttextstyle.scss';
+
+.mat-menu-panel {
+    margin: 12px;
+}
+.mat-menu-panel .mat-menu-content {
+    display: flex;
+    flex-direction: column;
+}
+.app-root.landscape .mat-menu-panel .mat-menu-content {
+    padding-top: 0;
+}
+.app-root.landscape .mat-menu-panel .mat-menu-content {
+    flex-direction: column-reverse;
+}
+.mat-menu-panel .mat-menu-item {
+    display: flex;
+    font-size: 17px;
+    align-items: center;
+}
+.mat-menu-panel .mat-menu-item .mat-icon {
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+    flex: 0 0;
+}
+.mat-menu-panel .mat-menu-item .menu-item-text {
+    flex: 1 1;
+}
+
+.mat-icon.inline-icon {
+    font-size: inherit;
+    height: 1em;
+    width: 1em;
+    margin-left: 0.3em;
+    vertical-align: middle;
+}
+
+.menu-row {
+    display: flex;
+}
+.menu-column {
+    flex: 1;
+    text-align: center;
+}

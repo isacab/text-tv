@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit, NgZone } from '@angular/core';
-import { of, Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Direction } from '../../components/swipe-container/swipe-container.component';
 import { environment } from '../../../../../environments/environment';
@@ -8,8 +8,12 @@ import { TextTvPage } from 'src/app/models/text-tv-page';
 import { TextTvService } from 'src/app/services/text-tv.service';
 import { StatusMessageService } from 'src/app/services/status-message.service';
 import { catchError, filter } from 'rxjs/operators';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MoreMenuBottomSheetComponent } from '../../components/more-menu-bottom-sheet/more-menu-bottom-sheet.component';
+import { MatBottomSheet, MatBottomSheetConfig } from '@angular/material/bottom-sheet';
+import { InfoComponent } from '../../components/info/info.component';
+import { Location, PlatformLocation } from '@angular/common';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { MatDialog } from '@angular/material/dialog';
+import { ClosePopupsService } from 'src/app/services/close-popups.service';
 
 declare var window: any;
 declare var DocumentTouch: any;
@@ -40,6 +44,11 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   pageNumber: number | string;
   renderTheme: string = 'double-height-titles';
   renderDimensions: {};
+  bookmarked: boolean;
+
+  hideMenu: boolean;
+
+  disabledMenuItems: { [key: string]: boolean } = { 'forward': true };
 
   fontConfig = {
     //'Consolas': { class: null, contentWidth: 340, contentHeight: 392, letterWidth: 9 }, 
@@ -58,8 +67,10 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private ngZone: NgZone,
     private statusMessage: StatusMessageService,
+    private closePopupService: ClosePopupsService,
     private bottomSheet: MatBottomSheet
-  ) { }
+  ) { 
+  }
 
   ngOnInit(): void {
     this.envClass = environment.client || 'web';
@@ -91,6 +102,19 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     //   this.applyPreferences(preferences);
     //   this.init = true;
     // });
+    this.androidInterface.blockExit.subscribe(blockExit => {
+      if(!blockExit) {
+        this.closePopupService.closeAll();
+      }
+    });
+    this.androidInterface.canGoForward.subscribe(canGoForward => {
+      this.disabledMenuItems['forward'] = !canGoForward;
+    });
+    this.androidInterface.showFindInPage.subscribe(showFindInPage => {
+      this.ngZone.run(() => {
+        this.hideMenu = showFindInPage;
+      });
+    });
     this.statusMessage.check();
   }
 
@@ -177,7 +201,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       if(!ready) {
         this.showLoadingOverlay = showLoadingOverlay;
       }
-    }, 0); //333);
+    }, 333);
 
     setTimeout(() => {
       (document.activeElement as HTMLElement).blur();
@@ -185,13 +209,30 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onLinkClick(href: string) {
-    const url = href.substr(href.lastIndexOf('/') + 1);
-    this.pageChange(url);
+    const page = href.substr(href.lastIndexOf('/') + 1);
+    this.pageChange(page);
   }
 
   pageChange(newPage: number | string) {
     if(newPage >= 100 && newPage <= 999 && newPage.toString() !== this.route.snapshot.paramMap.get('page')) {
       this.router.navigateByUrl('/' + newPage);
+    }
+  }
+
+  menuItemClick(itemKey: string): void {
+    switch(itemKey) {
+      case 'home': this.home(); break;
+      case 'prev': this.prev(); break;
+      case 'next': this.next(); break;
+      case 'refresh': this.refresh(true, true, false); break;
+      case 'info': this.info(); break;
+      case 'forward': this.forward(); break;
+      case 'bookmarks': this.bookmarks(); break; 
+      case 'toggle_bookmark': this.toggleBookmark(); break;
+      case 'find_in_page': this.findInPage(); break;
+      case 'open_in_browser': this.openInBrowser(); break;
+      case 'cast': this.cast(); break;
+      case 'share': this.share(); break;
     }
   }
 
@@ -218,16 +259,45 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  openSettings() {
-    this.androidInterface.openSettings();
+  info() {
+    const config = new MatBottomSheetConfig();
+    config.closeOnNavigation = false;
+    const ref = this.bottomSheet.open(InfoComponent, config);
+    ref.afterOpened().subscribe(() => {
+      this.closePopupService.add(ref);
+    });
   }
 
-  moreMenu() {
-    this.bottomSheet.open(MoreMenuBottomSheetComponent);
+  forward() {
+    window.history.forward();
   }
 
   home() {
     this.pageChange(100);
+  }
+
+  findInPage() {
+    this.androidInterface.setShowFindInPage(true);
+  }
+
+  openInBrowser() {
+    this.androidInterface.openInBrowser('https://www.svt.se/text-tv/' + this.textTvPage?.pageNumber || '');
+  }
+
+  bookmarks() {
+
+  }
+
+  toggleBookmark() {
+    this.bookmarked = !this.bookmarked;
+  }
+
+  share() {
+
+  }
+
+  cast() {
+
   }
 
   // applyPreferences(preferences: any): void {

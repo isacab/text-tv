@@ -18,7 +18,14 @@
     <app-loading-overlay *ngIf="showLoadingOverlay"></app-loading-overlay>
   </div>
   <div class="app-footer">
-    <app-menu-bar [page]="pageNumber" [direction]="menuDirection" (pageChange)="pageChange($event)" (refreshClick)="refresh(true, true, false)" (homeClick)="home()" (nextClick)="next()" (prevClick)="prev()" (moreClick)="moreMenu()"></app-menu-bar>
+    <app-menu-bar 
+      [page]="pageNumber" 
+      [direction]="menuDirection" 
+      [disabledItems]="disabledMenuItems" 
+      [bookmarked]="bookmarked"
+      [style.visibility]="hideMenu ? 'hidden' : 'visible'"
+      (pageChange)="pageChange($event)" 
+      (itemClick)="menuItemClick($event)"></app-menu-bar>
   </div>
 </div>
 <!-- <div class="splash-overlay" *ngIf="!init"></div>  -->

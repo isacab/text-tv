@@ -14,8 +14,11 @@ import io.reactivex.subjects.ReplaySubject;
 
 public class AppStateService {
 
-  //private ReplaySubject<Integer> mPageSubject = ReplaySubject.createWithSize(1);
+  private ReplaySubject<Integer> mPageSubject = ReplaySubject.createWithSize(1);
+  private ReplaySubject<Boolean> mCanGoForwardSubject = ReplaySubject.createWithSize(1);
   private ReplaySubject<Boolean> mRefreshingSubject = ReplaySubject.createWithSize(1);
+  private ReplaySubject<Boolean> mBlockExitSubject = ReplaySubject.createWithSize(1);
+  private ReplaySubject<Boolean> mShowFindInPageSubject = ReplaySubject.createWithSize(1);
   private ReplaySubject<Map<String, ?>> mPreferencesSubject = ReplaySubject.createWithSize(1);
   private PublishSubject<Integer> mResumeSubject = PublishSubject.create();
   private PublishSubject<Integer> mPauseSubject = PublishSubject.create();
@@ -23,7 +26,7 @@ public class AppStateService {
   public AppStateService() {
   }
 
-  /*public Observable<Integer> getPage() {
+  public Observable<Integer> getPage() {
     return mPageSubject.hide();
   }
 
@@ -41,7 +44,27 @@ public class AppStateService {
         }
       });
     }
-  }*/
+  }
+
+  public Observable<Boolean> getCanGoForward() {
+    return mCanGoForwardSubject.hide();
+  }
+
+  public Boolean getCanGoForwardValue() {
+    return mCanGoForwardSubject.getValue();
+  }
+
+  public void setCanGoForward(Boolean value) {
+    // Log.d("setCanGoForward", value.toString());
+    if (mCanGoForwardSubject.getValue() != value) {
+      new Handler(Looper.getMainLooper()).post(new RunnableWithArg(value) {
+        @Override
+        public void run() {
+          mCanGoForwardSubject.onNext((Boolean)arg);
+        }
+      });
+    }
+  }
 
   public Observable<Boolean> getRefreshing() {
     return mRefreshingSubject.hide();
@@ -58,6 +81,46 @@ public class AppStateService {
         @Override
         public void run() {
           mRefreshingSubject.onNext((Boolean)arg);
+        }
+      });
+    }
+  }
+
+  public Observable<Boolean> getBlockExit() {
+    return mBlockExitSubject.hide();
+  }
+
+  public Boolean getBlockExitValue() {
+    return mBlockExitSubject.getValue();
+  }
+
+  public void setBlockExit(Boolean value) {
+    // Log.d("setBlockExit", value.toString());
+    if (mBlockExitSubject.getValue() != value) {
+      new Handler(Looper.getMainLooper()).post(new RunnableWithArg(value) {
+        @Override
+        public void run() {
+          mBlockExitSubject.onNext((Boolean)arg);
+        }
+      });
+    }
+  }
+
+  public Observable<Boolean> getShowFindInPage() {
+    return mShowFindInPageSubject.hide();
+  }
+
+  public Boolean getShowFindInPageValue() {
+    return mShowFindInPageSubject.getValue();
+  }
+
+  public void setShowFindInPage(Boolean value) {
+    // Log.d("setShowFindInPage", value.toString());
+    if (mShowFindInPageSubject.getValue() != value) {
+      new Handler(Looper.getMainLooper()).post(new RunnableWithArg(value) {
+        @Override
+        public void run() {
+          mShowFindInPageSubject.onNext((Boolean)arg);
         }
       });
     }

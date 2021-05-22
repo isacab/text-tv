@@ -16,10 +16,11 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
 import { LoadingOverlayComponent } from './components/loading-overlay/loading-overlay.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { MoreMenuBottomSheetComponent } from './components/more-menu-bottom-sheet/more-menu-bottom-sheet.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { InfoComponent } from './components/info/info.component';
+import { MatDividerModule } from '@angular/material/divider';
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any> {
@@ -39,7 +40,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     SwipeContainerComponent,
     LoadingOverlayComponent,
     DialogComponent,
-    MoreMenuBottomSheetComponent,
+    InfoComponent,
   ],
   imports: [
     CommonModule,
@@ -50,7 +51,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatBottomSheetModule,
+    MatMenuModule,
     MatListModule,
+    MatDividerModule,
     HammerModule,
     ScrollingModule
   ],

@@ -1,19 +1,83 @@
 <div [ngClass]="['menu-container', direction]" [class.page-input-focused]="pageInput.hasFocus()">
   <div class="menu-item small">
-    <button mat-button class="menu-action-btn" title="Hem" (click)="home()"><i class="material-icons">home</i></button>
+    <button mat-button class="menu-action-btn" title="Hem" (click)="onItemClick('home', $event)"><i class="material-icons">home</i></button>
   </div>
   <div class="menu-item">
-    <button mat-button class="menu-action-btn prev-arrow-left" title="Föregående" (click)="prev()"><i class="material-icons">keyboard_arrow_left</i></button>
-    <!--<button mat-button class="menu-action-btn prev-arrow-down" title="Föregående" (click)="prev()"><i class="material-icons">keyboard_arrow_down</i></button>-->
+    <button mat-button class="menu-action-btn prev-arrow-left" title="Föregående" (click)="onItemClick('prev', $event)"><i class="material-icons">keyboard_arrow_left</i></button>
   </div>
   <div class="menu-item page-number-item">
-    <app-page-number-input #pageInput [page]="page" (pageChange)="pageInputChange($event)"></app-page-number-input>
+    <app-page-number-input #pageInput [page]="page" (pageChange)="onPageChange($event)"></app-page-number-input>
   </div>
   <div class="menu-item">
-    <button mat-button class="menu-action-btn next-arrow-right" title="Nästa" (click)="next()"><i class="material-icons">keyboard_arrow_right</i></button>
-    <!--<button mat-button class="menu-action-btn next-arrow-up" title="Nästa" (click)="next()"><i class="material-icons">keyboard_arrow_up</i></button>-->
+    <button mat-button class="menu-action-btn next-arrow-right" title="Nästa" (click)="onItemClick('next', $event)"><i class="material-icons">keyboard_arrow_right</i></button>
   </div>
   <div class="menu-item small">
-    <button mat-button class="menu-action-btn" title="Mer" (click)="more()"><i class="material-icons">menu</i></button>
+    <button mat-button class="menu-action-btn" title="Mer" #moreMenuTrigger [matMenuTriggerFor]="moreMenu"><i class="material-icons">more_horiz</i></button>
   </div>
 </div>
+
+<!-- more menu -->
+<mat-menu #moreMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="true">
+  <button mat-menu-item (click)="onItemClick('cast', $event)">
+    <mat-icon>cast</mat-icon>
+    <span class="menu-item-text ">Casta</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="onItemClick('font_settings', $event)">
+    <mat-icon>text_fields</mat-icon>
+    <span class="menu-item-text ">Typsnitt</span>
+  </button>
+  <button mat-menu-item (click)="onItemClick('bookmarks', $event)">
+    <mat-icon>star</mat-icon>
+    <span class="menu-item-text ">Bookmärken</span>
+  </button>
+  <button mat-menu-item (click)="onItemClick('find_in_page', $event)">
+    <mat-icon>find_in_page</mat-icon>
+    <span class="menu-item-text ">Hitta på sidan</span>
+  </button>
+  <button mat-menu-item (click)="onItemClick('open_in_browser', $event)">
+    <mat-icon>launch</mat-icon>
+    <span class="menu-item-text ">Öppna i webbläsare</span>
+  </button>
+  <button mat-menu-item (click)="onItemClick('info', $event)">
+    <mat-icon>info_outlined</mat-icon>
+    <span class="menu-item-text ">Information</span>
+  </button>
+  <!-- <button mat-menu-item (click)="onItemClick('share')">
+    <mat-icon>share</mat-icon>
+    <span class="menu-item-text ">Dela...</span>
+  </button> -->
+  <mat-divider></mat-divider>
+  <!-- <button mat-menu-item (click)="onItemClick('refresh')">
+    <mat-icon>refresh</mat-icon>
+    <span class="menu-item-text ">Uppdatera</span>
+  </button> -->
+  <div class="menu-row">
+    <div class="menu-column" (click)="onItemClick('forward', $event)">
+      <button mat-icon-button [disabled]="disabledItems?.forward">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    <div class="menu-column" (click)="onItemClick('toggle_bookmark', $event)">
+      <button mat-icon-button>
+        <mat-icon *ngIf="!bookmarked">star_border</mat-icon>
+        <mat-icon *ngIf="bookmarked" style="color: #FF0">star</mat-icon>
+      </button>
+    </div>
+    <div class="menu-column" (click)="onItemClick('share', $event)">
+      <button mat-icon-button>
+        <mat-icon>share</mat-icon>
+      </button>
+    </div>
+    <!-- <div class="menu-column">
+      <button mat-icon-button (click)="onItemClick('info')">
+        <mat-icon>info_outlined</mat-icon>
+      </button>
+    </div> -->
+    <div class="menu-column" (click)="onItemClick('refresh', $event)">
+      <button mat-icon-button>
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-menu>

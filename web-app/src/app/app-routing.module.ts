@@ -3,10 +3,11 @@ import { Routes, RouterModule, RouteReuseStrategy } from '@angular/router';
 import { MainComponent } from './modules/main/containers/main/main.component';
 import { environment } from 'src/environments/environment';
 import { ReuseOnSameComponentStrategy } from './strategies/reuse-on-same-component.strategy';
+import { ClosePopupsGuard } from './guards/close-popups.guard';
 
 const routes: Routes = [
-  { path: ':page', component: MainComponent },
-  { path: '', component: MainComponent }
+  { path: ':page', component: MainComponent, canDeactivate: [ClosePopupsGuard] },
+  { path: '', component: MainComponent, canDeactivate: [ClosePopupsGuard] }
 ];
 
 @NgModule({
