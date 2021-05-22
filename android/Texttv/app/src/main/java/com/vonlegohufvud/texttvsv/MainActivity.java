@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.app.Application;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +16,6 @@ import android.webkit.WebViewClient;
 import java.util.Map;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-
 import com.vonlegohufvud.texttvsv.fragments.FindInPageFragment;
 import com.vonlegohufvud.texttvsv.shared.CustomSwipeRefreshLayout;
 
@@ -30,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
   CustomSwipeRefreshLayout mSwipeRefreshLayout;
   WebView mWebView;
-  SwipeRefreshLayout.OnRefreshListener mRefreshListener;
   FindInPageFragment mFindInPageFragment = new FindInPageFragment();
 
   int resumeCount = 0;
@@ -76,9 +73,12 @@ public class MainActivity extends AppCompatActivity {
     //mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorAccent);
     mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
     mSwipeRefreshLayout.setEnabled(false);
-    if(mRefreshListener != null) {
-      mSwipeRefreshLayout.setOnRefreshListener(mRefreshListener);
-    }
+    mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override
+      public void onRefresh() {
+        mAppState.setRefreshing(true);
+      }
+    });
     mSwipeRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
       @Override
       public boolean canChildScrollUp(@NonNull SwipeRefreshLayout parent, @Nullable View child) {
@@ -154,11 +154,11 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public void onBackPressed() {
-    if (mAppState.getShowFindInPageValue()) {
+    if (Boolean.TRUE.equals(mAppState.getShowFindInPageValue())) {
       hideFindInPage();
     } else if (mWebView.canGoBack()) {
       mWebView.goBack();
-    } else if(mAppState.getBlockExitValue()) {
+    } else if(Boolean.TRUE.equals(mAppState.getBlockExitValue())) {
       mAppState.setBlockExit(false);
     } else {
       super.onBackPressed();
@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
       .show(mFindInPageFragment)
       .commit();
     mFindInPageFragment.focus();
+    mWebView.findAllAsync(mFindInPageFragment.getSearchString());
     mAppState.setShowFindInPage(true);
   }
 
